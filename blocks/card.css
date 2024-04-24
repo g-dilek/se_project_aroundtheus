@@ -58,7 +58,7 @@
   opacity: 0.6;
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 320px) {
   .card__list {
     padding: 0px;
     display: flex;
@@ -70,14 +70,14 @@
   }
 
   .card {
-    height: 361px;
+    max-height: 361px;
     display: flex;
     flex-direction: column;
     max-width: 282px;
   }
 }
 
-@media screen and (min-width: 481px) and (max-width: 830px) {
+@media screen and (min-width: 321px) and (max-width: 768px) {
   .card__list {
     padding: 0px;
     display: flex;

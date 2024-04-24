@@ -7,6 +7,7 @@
   border-bottom: 1px solid #545454;
   max-width: 880px;
   justify-content: space-between;
+  width: 100%;
 }
 
 .header__logo {
@@ -15,7 +16,7 @@
   align-self: flex-start;
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 320px) {
   .header {
     margin-top: 28px;
     margin-bottom: 41px;
@@ -24,11 +25,24 @@
     height: 74px;
     border-bottom: 1px solid #545454;
     justify-content: space-between;
+    width: 100%;
+  }
+
+  .header__logo {
+    height: 24px;
+    width: 126px;
+    align-self: flex-start;
   }
 }
 
-@media screen and (min-width: 481px) and (max-width: 830px) {
+@media screen and (min-width: 321px) and (max-width: 768px) {
   .header {
     min-width: 581px;
+  }
+
+  .header__logo {
+    height: 33px;
+    width: 173px;
+    align-self: flex-start;
   }
 }

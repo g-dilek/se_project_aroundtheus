@@ -10,7 +10,6 @@
 .page__section {
   max-width: 880px;
   width: 100%;
-  position: relative;
   margin: 0 auto;
   padding: 0;
 }
@@ -20,7 +19,7 @@
   flex-direction: column;
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 320px) {
   .page {
     display: flex;
     flex-direction: column;

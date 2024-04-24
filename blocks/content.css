@@ -5,7 +5,7 @@
   text-align: center;
 }
 
-@media screen and (min-width: 481px) and (max-width: 830px) {
+@media screen and (min-width: 321px) and (max-width: 768px) {
   .content {
     min-width: 581px;
   }
