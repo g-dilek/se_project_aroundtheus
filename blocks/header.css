@@ -5,7 +5,7 @@
   flex-direction: column;
   height: 74px;
   border-bottom: 1px solid #545454;
-  max-width: 880px;
+  min-width: 880px;
   justify-content: space-between;
   width: 100%;
 }
@@ -17,6 +17,10 @@
 }
 
 @media screen and (max-width: 320px) {
+  .header {
+    min-width: 282px;
+    max-width: 320px;
+  }
   .header__logo {
     height: 24px;
     width: 126px;
@@ -25,6 +29,10 @@
 }
 
 @media screen and (min-width: 321px) and (max-width: 768px) {
+  .header {
+    min-width: 581px;
+    max-width: 768px;
+  }
   .header__logo {
     height: 33px;
     width: 173px;
