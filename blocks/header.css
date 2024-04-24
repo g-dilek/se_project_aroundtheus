@@ -17,17 +17,6 @@
 }
 
 @media screen and (max-width: 320px) {
-  .header {
-    margin-top: 28px;
-    margin-bottom: 41px;
-    display: flex;
-    flex-direction: column;
-    height: 74px;
-    border-bottom: 1px solid #545454;
-    justify-content: space-between;
-    width: 100%;
-  }
-
   .header__logo {
     height: 24px;
     width: 126px;
@@ -36,10 +25,6 @@
 }
 
 @media screen and (min-width: 321px) and (max-width: 768px) {
-  .header {
-    min-width: 581px;
-  }
-
   .header__logo {
     height: 33px;
     width: 173px;
