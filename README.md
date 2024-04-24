@@ -1,29 +1,20 @@
 # Project 3: Around The U.S.
 
-### Overview
+This is the third project of the Software Engineering program at TripleTen. It was created using HTML and CSS, based on a given Figma design brief.
 
-- Intro
-- Figma
-- Images
+You can view and interact with the site here: https://g-dilek.github.io/se_project_aroundtheus
 
-**Intro**
+## Project Features
 
-This project is made so all the elements are displayed correctly on popular screen sizes. We recommend investing more time in completing this project, since it's more difficult than previous ones.
+- Responsive design for desktop, tablet, and mobile views
+- CSS Grid
+- Hover effects with transitions
+- Flat BEM file structure and organization
 
-**Figma**
+## Video Demonstration
 
-- [Link to the project on Figma](https://www.figma.com/file/ii4xxsJ0ghevUOcssTlHZv/Sprint-3%3A-Around-the-US?node-id=0%3A1)
+See the responsive design in action here: https://youtu.be/wOFhUryfaXE
 
-**Images**
+## Design brief
 
-The way you'll do this at work is by exporting images directly from Figma — we recommend doing that to practice more. Don't forget to optimize them [here](https://tinypng.com/), so your project loads faster.
-
-Good luck and have fun!
-
-<!-- The README.md file contains the following:
-1. The project's name
-2. A description of the project and its functionality
-3. A description of the technologies and techniques used
-4. Pictures, GIFs, or screenshots that detail the project features (highly
-recommended)
-5. The link to GitHub Pages -->
+View the original design brief in Figma: https://www.figma.com/file/ii4xxsJ0ghevUOcssTlHZv/Sprint-3%3A-Around-the-US?node-id=0%3A1
