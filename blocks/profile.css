@@ -223,16 +223,7 @@
     height: 24px;
     width: 24px;
     margin: 0;
-  }
-
-  .profile__follow-button {
-    background-color: black;
-    border-color: white;
-    height: 50px;
-    width: 150px;
-    transition: opacity 0.4s;
-    grid-area: follow-button;
-    margin-bottom: 36px;
+    cursor: pointer;
   }
 
   .profile__follow-button {
@@ -242,6 +233,9 @@
     width: 282px;
     transition: opacity 0.4s;
     grid-area: follow-button;
+    margin-bottom: 36px;
+    cursor: pointer;
     margin-left: auto;
+  }
   }
 }

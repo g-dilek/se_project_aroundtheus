@@ -20,8 +20,11 @@
   .header {
     min-width: 282px;
     max-width: 320px;
+    height: 24px;
+    padding-bottom: 32px;
   }
   .header__logo {
+    margin-left: 27px;
     height: 24px;
     width: 126px;
     align-self: flex-start;

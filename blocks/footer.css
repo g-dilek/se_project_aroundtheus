@@ -8,11 +8,23 @@
     display: flex;
     max-width: 282px;
   }
+
+  .footer__copyright {
+    margin: 48px 0 36px 0;
+    height: 0;
+    padding: 0;
+  }
 }
 
 @media screen and (min-width: 321px) and (max-width: 768px) {
   .footer {
     display: flex;
     max-width: 564px;
+  }
+
+  .footer__copyright {
+    margin: 48px 0 36px 0;
+    height: 0;
+    padding: 0;
   }
 }
