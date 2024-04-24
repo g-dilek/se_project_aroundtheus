@@ -1,0 +1,241 @@
+.profile {
+  display: flex;
+  align-items: center;
+  padding-bottom: 30px;
+  /* justify-content: space-between; */
+}
+
+.profile__info {
+  display: grid;
+  align-items: center;
+  grid-template-areas:
+    "title edit-button"
+    "subtitle subtitle";
+  grid-template-columns: minmax(auto, 373px) auto;
+  margin-right: 165px;
+}
+
+.profile__image {
+  margin-right: 30px;
+  height: 120px;
+  width: 120px;
+  grid-area: profile-image;
+}
+
+.profile__title {
+  margin: 0;
+  font-size: 42px;
+  line-height: 1.2;
+  grid-area: title;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.profile__subtitle {
+  margin: 0;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.2;
+  grid-area: subtitle;
+  text-align: left;
+}
+
+.profile__edit-button {
+  background-color: black;
+  border-color: white;
+  height: 24px;
+  width: 24px;
+  transition: opacity 0.4s;
+  grid-area: edit-button;
+  padding: 0;
+  margin-left: 18px;
+  margin-top: 6px;
+}
+
+.profile__edit-button:hover {
+  opacity: 0.6;
+}
+
+.profile__follow-button {
+  background-color: black;
+  border-color: white;
+  height: 50px;
+  width: 150px;
+  transition: opacity 0.4s;
+  grid-area: follow-button;
+  margin-left: auto;
+}
+
+.profile__follow-button:hover {
+  opacity: 0.6;
+}
+
+@media screen and (max-width: 480px) {
+  .profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0;
+    margin: 0;
+    max-width: 282px;
+  }
+
+  .profile__title {
+    margin-bottom: 14px;
+    font-size: 22px;
+    font-weight: 500;
+    line-height: 1.2;
+    min-width: 126px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    grid-area: title;
+  }
+
+  .profile__subtitle {
+    margin: 0;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1.2;
+    margin-bottom: 36px;
+    grid-area: subtitle;
+  }
+
+  .profile__info {
+    display: grid;
+    align-items: center;
+    justify-items: center;
+    grid-template-areas:
+      "title edit-button"
+      "subtitle subtitle";
+    grid-template-columns: 182px;
+    grid-column-gap: 10px;
+    margin: 0;
+    padding: 0;
+  }
+
+  .profile__image {
+    margin-bottom: 30px;
+    margin-right: 0;
+    height: 120px;
+    width: 120px;
+    grid-area: profile-image;
+  }
+
+  .profile__edit-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 18px;
+    width: 18px;
+    margin: 0 0 14px;
+    grid-area: edit-button;
+  }
+
+  .profile__follow-button {
+    background-color: black;
+    border-color: white;
+    height: 50px;
+    width: 150px;
+    transition: opacity 0.4s;
+    grid-area: follow-button;
+    margin-bottom: 36px;
+  }
+
+  .profile__follow-button {
+    background-color: black;
+    border-color: white;
+    height: 50px;
+    width: 282px;
+    transition: opacity 0.4s;
+    grid-area: follow-button;
+    margin-left: auto;
+  }
+}
+
+@media screen and (min-width: 481px) and (max-width: 830px) {
+  .profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0;
+    margin: 0;
+    max-width: 282px;
+  }
+
+  .profile__title {
+    margin-bottom: 14px;
+    font-size: 34px;
+    font-weight: 500;
+    line-height: 1.2;
+    min-width: 281px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    grid-area: title;
+  }
+
+  .profile__subtitle {
+    margin: 0;
+    font-weight: 400;
+    font-size: 18px;
+    grid-area: subtitle;
+    line-height: 1.2;
+    margin-bottom: 36px;
+    grid-area: subtitle;
+  }
+
+  .profile__info {
+    display: grid;
+    align-items: center;
+    justify-items: center;
+    grid-template-areas:
+      "title edit-button"
+      "subtitle subtitle";
+    grid-template-columns: 281px;
+    grid-column-gap: 10px;
+    margin: 0;
+    padding: 0;
+  }
+
+  .profile__image {
+    margin-bottom: 30px;
+    margin-right: 0;
+    height: 120px;
+    width: 120px;
+    grid-area: profile-image;
+  }
+
+  .profile__edit-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    grid-area: edit-button;
+    height: 24px;
+    width: 24px;
+    margin: 0 0 14px;
+  }
+
+  .profile__follow-button {
+    background-color: black;
+    border-color: white;
+    height: 50px;
+    width: 150px;
+    transition: opacity 0.4s;
+    grid-area: follow-button;
+    margin-bottom: 36px;
+  }
+
+  .profile__follow-button {
+    background-color: black;
+    border-color: white;
+    height: 50px;
+    width: 282px;
+    transition: opacity 0.4s;
+    grid-area: follow-button;
+    margin-left: auto;
+  }
+}

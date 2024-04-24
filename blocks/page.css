@@ -1,0 +1,38 @@
+.page {
+  font-family: Inter, Arial, Helvetica, sans-serif;
+  font-weight: 500;
+  /* Fix for Chrome per Inter font website */
+  font-feature-settings: "liga" 1, "calt" 1;
+  background-color: black;
+  color: white;
+}
+
+.page__section {
+  max-width: 880px;
+  width: 100%;
+  position: relative;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.page__content {
+  display: flex;
+  flex-direction: column;
+}
+
+@media screen and (max-width: 480px) {
+  .page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .page__content {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    justify-content: center;
+  }
+}
