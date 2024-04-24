@@ -8,7 +8,7 @@
   grid-row-gap: 20px;
   background-color: black;
   list-style-type: none;
-  justify-content: center;
+  justify-content: normal;
   max-width: 880px;
 }
 
