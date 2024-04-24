@@ -13,7 +13,9 @@ You can view and interact with the site here: https://g-dilek.github.io/se_proje
 
 ## Video Demonstration
 
-See the responsive design in action here: https://youtu.be/wOFhUryfaXE
+You can watch my presentation on the project here: https://www.loom.com/share/df180f732ad24365a217bb5a525e36cf?sid=d761e514-d0ca-4787-bf88-230d60d04c3e (6 minute presentation)
+
+See a short video of the responsive design in action here: https://youtu.be/wOFhUryfaXE (13 second clip of me showing desktop, tablet, and mobile views)
 
 ## Design brief
 
