@@ -1,97 +1,80 @@
 .card__list {
   padding: 0;
-  margin: 0;
+  margin: 51px 0 67px;
   display: grid;
-  grid-template-columns: repeat(3, 282px);
-  grid-template-rows: repeat(2, 361px);
-  grid-column-gap: 17px;
-  grid-row-gap: 20px;
-  background-color: black;
+  grid-template-columns: repeat(auto-fill, 282px);
+  grid-gap: 20px 17px;
   list-style-type: none;
-  justify-content: normal;
-  max-width: 880px;
+  justify-content: center;
 }
 
 .card {
-  height: 361px;
-  display: flex;
-  flex-direction: column;
-  margin: 0;
-  padding: 0;
+  background-color: white;
+  color: black;
+  border-radius: 10px;
+  max-width: 282px;
+  overflow: hidden;
 }
 
 .card__description {
-  background-color: white;
-  color: black;
-  border-radius: 0 0 25px 25px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 20px 0 20px;
-  min-height: 79px;
+  max-width: 282px;
+  margin: 0 20px;
 }
 
 .card__title {
+  flex: 1;
   font-weight: 900;
   font-size: 24px;
   line-height: 1.2;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+  margin: 25px auto;
 }
 
 .card__image {
-  width: 282px;
   height: 282px;
-  border-radius: 25px 25px 0 0;
+  width: 100%;
 }
 
 .card__like-button {
+  padding: 0;
+  background-image: url(../images/Vector_Heart.svg);
+  background-position: center;
+  background-repeat: no-repeat;
   transition: opacity 0.4s;
   border: none;
-  height: 21px;
-  width: 18px;
-  background-color: white;
+  height: 18px;
+  width: 21px;
+  background-color: transparent;
   cursor: pointer;
+  margin: 0;
 }
 
 .card__like-button:hover {
-  opacity: 0.6;
+  opacity: 0.5;
 }
 
 @media screen and (max-width: 320px) {
   .card__list {
-    padding: 0px;
     display: flex;
     flex-wrap: wrap;
-    background-color: rgb(0, 0, 0);
-    list-style-type: none;
     justify-content: center;
-    max-width: 880px;
   }
 
   .card {
-    max-height: 361px;
-    display: flex;
-    flex-direction: column;
-    max-width: 282px;
+    height: 361px;
+    width: 282px;
   }
 }
 
-@media screen and (min-width: 321px) and (max-width: 768px) {
+@media screen and (max-width: 768px) {
   .card__list {
-    padding: 0px;
-    display: flex;
-    flex-wrap: wrap;
-    background-color: rgb(0, 0, 0);
-    list-style-type: none;
-    justify-content: center;
-    min-width: 581px;
-  }
-
-  .card {
-    max-width: 282px;
     margin: 0;
-    padding: 0;
+    margin-top: 36px;
+    margin-bottom: 48px;
   }
 }

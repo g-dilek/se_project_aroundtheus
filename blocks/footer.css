@@ -1,30 +1,20 @@
 .footer__copyright {
   color: #545454;
-  margin: 67px 0 60px 0;
+  margin: 0;
+  padding: 0;
 }
 
 @media screen and (max-width: 320px) {
   .footer {
-    display: flex;
-    max-width: 282px;
   }
 
   .footer__copyright {
-    margin: 48px 0 36px 0;
-    height: 0;
-    padding: 0;
+    font-size: 14px;
   }
 }
 
-@media screen and (min-width: 321px) and (max-width: 768px) {
+@media screen and (min-width: 321px) and (max-width: 916px) {
   .footer {
-    display: flex;
-    max-width: 564px;
-  }
-
-  .footer__copyright {
-    margin: 48px 0 36px 0;
-    height: 0;
-    padding: 0;
+    width: 100%;
   }
 }
