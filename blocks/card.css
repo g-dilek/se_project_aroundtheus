@@ -59,12 +59,6 @@
 }
 
 @media screen and (max-width: 320px) {
-  .card__list {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
   .card {
     height: 361px;
     width: 282px;

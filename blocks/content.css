@@ -4,9 +4,3 @@
   align-items: center;
   text-align: center;
 }
-
-@media screen and (min-width: 321px) and (max-width: 768px) {
-  .content {
-    min-width: 581px;
-  }
-}
