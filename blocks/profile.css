@@ -36,11 +36,12 @@
   font-weight: 500;
   font-size: 42px;
   /* 48px line height divided by 42px font = 1.14285... */
-  /* I put 1.2 last submission as this was counted as incorrect */
+  /* I put 1.2 last submission and this was counted as incorrect */
   line-height: 1.14;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+  max-width: 373px;
 }
 
 .profile__subtitle {
@@ -52,6 +53,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+  max-width: 282px;
 }
 
 .profile__edit-button {
@@ -114,7 +116,6 @@
   .profile__follow-button {
     margin: 36px 0 0 0;
     width: 282px;
-    height: 50px;
   }
 }
 
@@ -126,10 +127,20 @@
 
   .profile__title {
     font-size: 22px;
+    margin: 30px 0 0 0;
+    /* Line height 26.63px divided by font size 22px =  1.210454545...*/
+    line-height: 1.2;
   }
 
   .profile__subtitle {
     text-align: center;
     font-size: 14px;
+    margin: 14px 0 0 0;
+  }
+
+  .profile__edit-button {
+    height: 18px;
+    width: 18px;
+    margin-left: 10px;
   }
 }
