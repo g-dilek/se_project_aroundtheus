@@ -97,7 +97,7 @@
   opacity: 0.6;
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 768px) {
   .profile {
     display: flex;
     flex-direction: column;
@@ -136,7 +136,7 @@
   }
 }
 
-/* {Previously: 481 and 830*/
+/* {Previously: 481 and 830
 @media screen and (min-width: 321px) and (max-width: 768px) {
   .profile {
     display: flex;
@@ -152,4 +152,4 @@
     width: 282px;
     height: 50px;
   }
-}
+} */
