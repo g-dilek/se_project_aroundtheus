@@ -1,4 +1,4 @@
-.card__list {
+.cards__list {
   padding: 0;
   margin: 51px 0 67px;
   display: grid;
@@ -8,7 +8,7 @@
   justify-content: center;
 }
 
-.card {
+.cards__content {
   background-color: white;
   color: black;
   border-radius: 10px;
@@ -16,15 +16,15 @@
   overflow: hidden;
 }
 
-.card__description {
+.cards__description {
   display: flex;
-  align-items: center;
   justify-content: space-between;
   max-width: 282px;
   margin: 0 20px;
+  align-items: center;
 }
 
-.card__title {
+.cards__title {
   flex: 1;
   font-weight: 900;
   font-size: 24px;
@@ -35,12 +35,12 @@
   margin: 25px auto;
 }
 
-.card__image {
+.cards__image {
   height: 282px;
   width: 100%;
 }
 
-.card__like-button {
+.cards__like-button {
   padding: 0;
   background-image: url(../images/Vector_Heart.svg);
   background-position: center;
@@ -54,19 +54,12 @@
   margin: 0;
 }
 
-.card__like-button:hover {
+.cards__like-button:hover {
   opacity: 0.5;
 }
 
-@media screen and (max-width: 320px) {
-  .card {
-    height: 361px;
-    width: 282px;
-  }
-}
-
 @media screen and (max-width: 768px) {
-  .card__list {
+  .cards__list {
     margin: 0;
     margin-top: 36px;
     margin-bottom: 48px;
