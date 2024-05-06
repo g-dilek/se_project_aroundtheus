@@ -5,6 +5,8 @@
   font-feature-settings: "liga" 1, "calt" 1;
   background-color: black;
   color: white;
+  /* Prevents my browser from displaying project in dark mode */
+  color-scheme: initial;
 }
 
 .page__section {
