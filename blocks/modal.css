@@ -7,9 +7,6 @@
   z-index: 999;
   background-color: rgba(0, 0, 0, 0.5);
   padding: 0 19px 0 19px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   display: none;
 }
 
