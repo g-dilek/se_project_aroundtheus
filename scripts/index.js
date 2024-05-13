@@ -29,17 +29,12 @@ const initialCards = [
 const profileEditButton = document.querySelector("#profile-edit-button");
 const profileEditModal = document.querySelector("#profile-edit-modal");
 
+const profileCloseButton = document.querySelector("#profile-close-button");
+
 profileEditButton.addEventListener("click", () => {
   profileEditModal.classList.add("modal__opened");
 });
 
-// This is what AI said would work and it does. Not sure why the above doesn't:
-//
-// document.addEventListener("DOMContentLoaded", () => {
-//   const profileEditButton = document.querySelector("#profile-edit-button");
-//   const profileEditModal = document.querySelector("#profile-edit-modal");
-
-//   profileEditButton.addEventListener("click", () => {
-//     profileEditModal.classList.add("modal__opened");
-//   });
-// });
+profileCloseButton.addEventListener("click", () => {
+  profileEditModal.classList.remove("modal__opened");
+});
