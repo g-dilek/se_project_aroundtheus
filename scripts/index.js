@@ -25,16 +25,46 @@ const initialCards = [
   },
 ];
 
-// Elements
+// ! ELEMENTS
+
 const profileEditButton = document.querySelector("#profile-edit-button");
 const profileEditModal = document.querySelector("#profile-edit-modal");
-
 const profileCloseButton = document.querySelector("#profile-close-button");
+const profileTitle = document.querySelector("#profile-title");
+const profileSubtitle = document.querySelector("#profile-subtitle");
+const profileEditTitle = document.querySelector("#profile-edit-title");
+const profileEditSubtitle = document.querySelector("#profile-edit-subtitle");
+const profileEditForm = document.querySelector("#profile-edit-form");
 
+// ! FUNCTIONS
+
+function closePopUp() {
+  profileEditModal.classList.remove("modal__opened");
+}
+
+// ! EVENT HANDLERS
+
+function handleProfileEditSubmit(evt) {
+  evt.preventDefault();
+  profileTitle.textContent = profileEditTitle.value;
+  profileSubtitle.textContent = profileEditSubtitle.value;
+  closePopUp();
+}
+
+// ! EVENT LISTENERS
+
+// When edit button clicked, open modal
 profileEditButton.addEventListener("click", () => {
   profileEditModal.classList.add("modal__opened");
+  // Trim removes any whitespace before text
+  profileEditTitle.value = profileTitle.textContent.trim();
+  profileEditSubtitle.value = profileSubtitle.textContent;
+  // Automatically puts focus on title input when opened for easy editing
+  profileEditTitle.focus();
+  profileEditTitle.select();
 });
 
-profileCloseButton.addEventListener("click", () => {
-  profileEditModal.classList.remove("modal__opened");
-});
+// When modal close button clicked, close modal
+profileCloseButton.addEventListener("click", closePopUp);
+
+profileEditForm.addEventListener("submit", handleProfileEditSubmit);
