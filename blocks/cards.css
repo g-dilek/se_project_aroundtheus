@@ -16,7 +16,7 @@
   overflow: hidden;
 }
 
-.cards__description {
+.cards__subtitle {
   display: flex;
   justify-content: space-between;
   max-width: 282px;
