@@ -72,7 +72,7 @@
   opacity: 0.6;
 }
 
-.profile__follow-button {
+.profile__add-card-button {
   background-image: url(../images/Vector_Plus.svg);
   background-position: center;
   background-repeat: no-repeat;
@@ -87,7 +87,7 @@
   padding: 0;
 }
 
-.profile__follow-button:hover {
+.profile__add-card-button:hover {
   opacity: 0.6;
 }
 
@@ -111,7 +111,7 @@
     max-width: 282px;
   }
 
-  .profile__follow-button {
+  .profile__add-card-button {
     margin: 36px 0 0 0;
     width: 282px;
   }

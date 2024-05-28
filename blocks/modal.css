@@ -77,8 +77,8 @@
 .modal__close-button {
   position: absolute;
   cursor: pointer;
-  top: -45px;
-  right: -45px;
+  bottom: calc(100%);
+  left: calc(100% + 5px);
   background-image: url("../images/Vector_Close.svg");
   border: none;
   background-color: transparent;
@@ -93,7 +93,7 @@
   opacity: 0.5;
 }
 
-@media screen and (max-width: 630px) {
+@media screen and (max-width: 810px) {
   .modal__container {
     max-width: 282px;
     max-height: 322px;

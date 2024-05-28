@@ -45,7 +45,11 @@
               <p class="profile__subtitle" id="profile-subtitle">Explorer</p>
             </div>
           </div>
-          <button type="button" class="profile__follow-button"></button>
+          <button
+            type="button"
+            class="profile__add-card-button"
+            id="profile-add-card-button"
+          ></button>
         </section>
         <section class="cards page__section">
           <ul class="cards__list" id="card-list"></ul>
@@ -55,7 +59,7 @@
       <footer class="footer page__section">
         <p class="footer__copyright">© 2024 Grace Persion</p>
       </footer>
-
+      <!-- Profile edit modal -->
       <div class="modal" id="profile-edit-modal">
         <div class="modal__container">
           <button
@@ -89,14 +93,73 @@
           </form>
         </div>
       </div>
-      <!-- Page content -->
+
+      <!-- Image add modal -->
+      <div class="modal" id="profile-add-card-modal">
+        <div class="modal__container">
+          <button
+            type="button"
+            class="modal__close-button"
+            id="profile-add-card-close-button"
+          ></button>
+          <p class="modal__heading">New Place</p>
+          <form class="modal__form" id="profile-add-card-form">
+            <input
+              type="text"
+              name="title"
+              class="modal__input"
+              placeholder="Title"
+              id="profile-add-card-title"
+            />
+            <input
+              type="text"
+              name="image"
+              class="modal__input"
+              placeholder="Image Link"
+              id="profile-add-card-image"
+            />
+            <button
+              type="submit"
+              class="modal__save-button"
+              id="profile-add-card-create-button"
+            >
+              Create
+            </button>
+          </form>
+        </div>
+      </div>
+      <!-- Card image modal -->
+      <div class="modal" id="card-image-modal">
+
+          <button
+            type="button"
+            class="modal__close-button"
+            id="card-image-close-button"
+          ></button>
+                  <img src="" class="cards__full-image" alt="" id="card-full-image" />
+        <div class="cards__description" id="card-description">
+          <h2 class="cards__title" id="card-title"></h2>
+          <p class="modal__caption"></p>
+        </div>
     </div>
+      <!-- Page content -->
+
+    <!-- TEMPLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAATE -->
     <template id="card-template">
       <li class="cards__content">
         <img src="" class="cards__image" alt="" id="card-image" />
         <div class="cards__description" id="card-description">
           <h2 class="cards__title" id="card-title"></h2>
-          <button class="cards__like-button" type="button"></button>
+          <button
+            class="cards__like-button"
+            type="button"
+            id="card-like-button"
+          ></button>
+          <button
+            class="cards__delete-button"
+            type="button"
+            id="card-delete-button"
+          ></button>
         </div></li
     ></template>
     <script src="./scripts/index.js"></script>
