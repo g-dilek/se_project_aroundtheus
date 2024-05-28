@@ -84,18 +84,6 @@
   opacity: 0.6;
 }
 
-.cards__full-image {
-  position: relative;
-  margin: auto;
-  max-width: 75vw;
-  max-height: 75vh;
-}
-
-.modal__card-image-close-button {
-  bottom: calc(100%);
-  left: calc(100% + 5px);
-}
-
 @media screen and (max-width: 768px) {
   .cards__list {
     margin: 0;

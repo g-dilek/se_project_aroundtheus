@@ -107,6 +107,18 @@
   padding: 0;
 }
 
+.modal__card-image {
+  position: relative;
+  margin: auto;
+  max-width: 75vw;
+  max-height: 75vh;
+}
+
+.modal__card-image-close-button {
+  bottom: calc(100%);
+  left: calc(100% + 5px);
+}
+
 @media screen and (max-width: 810px) {
   .modal__container {
     max-width: 282px;
