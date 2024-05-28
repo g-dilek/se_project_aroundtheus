@@ -42,6 +42,7 @@ const cardListEl = document.querySelector("#card-list");
 const cardImageModal = document.querySelector("#card-image-modal");
 const cardImageCloseButton = document.querySelector("#card-image-close-button");
 const cardFullImage = document.querySelector("#card-full-image");
+const cardCaption = document.querySelector("#card-caption");
 
 const profileAddCardButton = document.querySelector("#profile-add-card-button");
 const profileAddCardModal = document.querySelector("#profile-add-card-modal");
@@ -82,6 +83,7 @@ function getCardElement(cardData) {
   const cardImageEl = cardElement.querySelector("#card-image");
   const cardTitleEl = cardElement.querySelector("#card-title");
   const profileCardLikeButton = cardElement.querySelector("#card-like-button");
+
   profileCardLikeButton.addEventListener("click", () => {
     profileCardLikeButton.classList.toggle("cards__like-button-active");
   });
@@ -94,6 +96,7 @@ function getCardElement(cardData) {
   cardImageEl.addEventListener("click", () => {
     openModal(cardImageModal);
     cardFullImage.src = cardImageEl.src;
+    cardCaption.textContent = cardData.name;
   });
   cardImageCloseButton.addEventListener("click", () => {
     closePopUp(cardImageModal);
@@ -172,6 +175,4 @@ initialCards.forEach((cardData) => {
   cardListEl.append(cardElement);
 });
 
-// Add delete icon - make it delete card
-// When photo clicked, open modal of full-size picture
 // Smooth transitions - use visibility

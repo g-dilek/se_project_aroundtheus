@@ -10,11 +10,13 @@
   display: flex;
   visibility: hidden;
   opacity: 0;
+  transition: visibility 0s linear 0.5s, opacity 0.5s linear;
 }
 
 .modal_opened {
   visibility: visible;
   opacity: 1;
+  transition-delay: 0s;
 }
 
 .modal__heading {
@@ -91,6 +93,18 @@
 
 .modal__close-button:hover {
   opacity: 0.5;
+}
+
+.modal__container-preview {
+  position: relative;
+  margin: auto;
+}
+
+.modal__caption {
+  color: #fff;
+  font-size: 12px;
+  margin: 10px 0 0 0;
+  padding: 0;
 }
 
 @media screen and (max-width: 810px) {
