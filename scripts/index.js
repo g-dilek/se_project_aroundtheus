@@ -101,9 +101,6 @@ function getCardElement(cardData) {
     cardFullImage.alt = cardImageEl.alt;
     cardCaption.textContent = cardData.name;
   });
-  cardImageCloseButton.addEventListener("click", () => {
-    closePopUp(cardImageModal);
-  });
   cardTitleEl.textContent = cardData.name;
   cardImageEl.src = cardData.link;
   cardImageEl.alt = cardTitleEl.textContent;
@@ -133,31 +130,31 @@ function handleProfileEditSubmit(evt) {
   closePopUp(profileEditModal);
 }
 
-// Prevents refresh
+// When add card submitted: prevents refresh, closes add card modal,
+// adds new card, resets title and image values only after submit
 function handleAddCardSubmit(evt) {
   evt.preventDefault();
   closePopUp(addCardModal);
   addCard();
+  editCardTitle.value = "";
+  editCardImage.value = "";
 }
 
 // ! EVENT LISTENERS
 
-// Here's where I'll add openModal- at arrow function
 // When edit button clicked, open profile modal
 profileEditButton.addEventListener("click", () => {
   openModal(profileEditModal);
   fillProfileInputs();
 });
 
-//Add openModal here too
 // When add card button clicked, open modal
 addCardButton.addEventListener("click", () => {
   openModal(addCardModal);
   focusCardFormInput();
-  editCardTitle.value = "";
-  editCardImage.value = "";
 });
 
+// When a modal close button clicked, check closest modal and run closePopUp() on it
 closeButton.forEach((button) => {
   const closestModal = button.closest(".modal");
   button.addEventListener("click", () => {
@@ -166,7 +163,7 @@ closeButton.forEach((button) => {
 });
 
 // When 'save' clicked, prevent page refreshing and
-// add text entered to profile
+// add text entered to profile modal
 profileEditForm.addEventListener("submit", handleProfileEditSubmit);
 
 // Same for add card modal
