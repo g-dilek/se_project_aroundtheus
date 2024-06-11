@@ -173,3 +173,33 @@ initialCards.forEach((cardData) => {
   const cardElement = getCardElement(cardData);
   cardListEl.append(cardElement);
 });
+
+// ! SPRINT 6
+
+// ! NUMBER 1
+// * Validate "Edit Profile"
+// The 'edit profile' form should have validations for the
+// name and about. "Name" - 2-40char. "About" - 2-200char.
+// Use Figma for design of error message elements.
+
+// Make 'Save' button inactive to start and if any field
+// doesn't pass validation. When both pass, 'Save' button
+// should become active. Again, use Figma colors/design.
+// When a modal window is open and you reset input field
+// values, make sure to disable 'save' button + add corre-
+// sponding class.
+
+// Configuration object
+// A way of passing multiple recurring parameters to
+// functions in Javascript. querySelectors are this!
+
+// ! NUMBER 2
+// * Validate "New Place"
+// "Title" - 1-30char. Image URL field must be URL.
+// Do the same stuff as above.
+
+// ! NUMBER 3
+// * Code the ability to close modal by clicking on background
+
+// ! NUMBER 4
+// * Code ability to close modal with Esc key
