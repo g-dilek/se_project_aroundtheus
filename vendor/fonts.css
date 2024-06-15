@@ -1,23 +1,24 @@
 @font-face {
-  font-family: "Inter";
+  font-family: "Lora";
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url("./fonts/Inter-Regular.woff2") format("woff2");
+  src: url("./fonts/Lora/Lora-VariableFont_wght.ttf") format("ttf");
 }
 
 @font-face {
-  font-family: "Inter";
+  font-family: "Nunito";
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: url("./fonts/Inter-Medium.woff2") format("woff2");
+  src: url("./fonts/Nunito/Nunito-VariableFont_wght.ttf") format("woff2");
 }
 
 @font-face {
-  font-family: "Inter";
+  font-family: "Playfair Display";
   font-style: normal;
   font-weight: 900;
   font-display: swap;
-  src: url("./fonts/Inter-Black.woff2") format("woff2");
+  src: url("./fonts/Playfair_Display/PlayfairDisplay-VariableFont_wght.ttf")
+    format("woff2");
 }
