@@ -59,6 +59,7 @@
       <footer class="footer page__section">
         <p class="footer__copyright">© 2024 Grace Persion</p>
       </footer>
+
       <!-- Profile edit modal -->
       <div class="modal" id="profile-edit-modal">
         <div class="modal__container">
@@ -68,7 +69,7 @@
             id="profile-close-button"
           ></button>
           <p class="modal__heading">Edit Profile</p>
-          <form class="modal__form" id="profile-edit-form">
+          <form class="modal__form" id="profile-edit-form" novalidate>
             <input
               type="text"
               name="title"
@@ -79,6 +80,7 @@
               minlength="2"
               maxlength="40"
             />
+            <span class="modal__error">Place error message here</span>
             <input
               type="text"
               name="subtitle"
@@ -109,7 +111,7 @@
             id="profile-add-card-close-button"
           ></button>
           <p class="modal__heading">New Place</p>
-          <form class="modal__form" id="profile-add-card-form">
+          <form class="modal__form" id="profile-add-card-form" novalidate>
             <input
               type="text"
               name="title"

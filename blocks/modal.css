@@ -114,6 +114,29 @@
   max-height: 75vh;
 }
 
+.modal__save-button_disabled {
+  /* code here */
+}
+
+.modal__error {
+  font-size: 12px;
+  line-height: 15px;
+  color: #ff0000;
+  position: absolute;
+  top: calc(40% + 25px);
+  left: 35px;
+  transition: opacity 0.3s;
+  opacity: 0;
+}
+
+.modal__input_type_error {
+  border-color: #ff0000;
+}
+
+.modal__error_visible {
+  opacity: 1;
+}
+
 @media screen and (max-width: 810px) {
   .modal__container {
     max-width: 282px;
