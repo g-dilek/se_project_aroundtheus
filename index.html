@@ -4,248 +4,174 @@
     <meta charset="UTF-8" />
     <meta
       name="description"
-      content="California National Park Road Trip Creator"
+      content="All about Jacques Cousteau and his journey around the United States."
     />
-    <meta
-      name="keywords"
-      content="California, national parks, road trip, code jam, Tripleten, 2024"
-    />
-    <meta
-      name="author"
-      content="Redwood Rangers (Dale, Grace, Laura, and Mike)"
-    />
+    <meta name="keywords" content="Jacques Cousteau, explorer, United States" />
+    <meta name="author" content="Grace Persion" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>California National Parks</title>
+    <link rel="shortcut icon" href="favicon.ico" />
+    <link href="./pages/index.css" rel="stylesheet" />
 
-    <!-- CSS Stylesheets -->
-    <link rel="stylesheet" href="./blocks/car.css" />
-
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-
-    <!-- Lora, Nunito, and Playfair Display fonts -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
-      rel="stylesheet"
-    />
-
-    <!-- Magnifying glass search icon -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-    />
+    <title>Around The U.S.</title>
   </head>
-  <body>
-    <section class="title">
-      <div class="title__container">
-        <h1 class="title__text">Adventure awaits</h1>
-        <h2 class="title__subtitle">in the National Parks of California</h2>
-      </div>
-    </section>
-
-    <div class="mountain-container">
-      <!-- Mountain background applied via CSS -->
-    </div>
-
-    <!-- Dropdown list -->
-
-    <section class="search">
-      <div class="search-container">
-        <form class="example" action="">
-          <select name="cars" id="cars" class="dropdown">
-            <option disabled selected>Choose your starting location</option>
-            <option value="channel-islands">Channel Islands</option>
-            <option value="death-valley">Death Valley</option>
-            <option value="joshua-tree">Joshua Tree</option>
-            <option value="kings-canyon">Kings Canyon</option>
-            <option value="lassen-volcanic">Lassen Volcanic</option>
-            <option value="pinnacles">Pinnacles</option>
-            <option value="redwood">Redwood</option>
-            <option value="sequoia">Sequoia</option>
-            <option value="yosemite">Yosemite</option>
-          </select>
-          <button type="submit"><i class="fa fa-search"></i></button>
-        </form>
-      </div>
-    </section>
-
-    <!-- White background section for text and cards -->
-    <div class="white-section">
-      <div class="content">
-        <section class="cards">
-          <h2 class="cards__title-text">Your road trip, start to finish...</h2>
-
-          <ul class="cards__list">
-            <li class="cards__content">
-              <h2 class="cards__title">Redwood Forest</h2>
-              <img
-                src="./images/redwood-national-park.jpg"
-                alt="Redwoods Forest"
-                class="cards__image"
-              />
-              <p class="cards__description">
-                Welcome to Redwood National Park, where towering coastal
-                redwoods create a cathedral-like canopy over a lush forest
-                floor. Trails wind through ancient groves, where you can touch
-                trees older than the Roman Empire. Along the rugged coastline,
-                waves crash against dramatic sea stacks, while wildlife thrives
-                in this serene sanctuary. Experience sunsets that paint the sky
-                with vibrant hues, making every moment here unforgettable.
-              </p>
-            </li>
-
-            <li class="cards__content">
-              <h2 class="cards__title">Channel Islands</h2>
-              <img
-                src="./images/channel-islands-national-park.avif"
-                alt="Channel Islands"
-                class="cards__image"
-              />
-              <p class="cards__description">
-                Welcome to the Channel Islands, a pristine archipelago off
-                California's coast. Each island boasts unique landscapes and
-                wildlife—Santa Cruz for its hills and foxes, Anacapa for sea
-                arches and seabirds, Santa Rosa for beaches and history, and
-                Santa Barbara for its lighthouse and marine life. Explore this
-                sanctuary of natural beauty and tranquility.
-              </p>
-            </li>
-
-            <li class="cards__content">
-              <h2 class="cards__title">Death Valley</h2>
-              <img
-                src="./images/death-valley-national-park.webp"
-                alt="Death Valley"
-                class="cards__image"
-              />
-              <p class="cards__description">
-                Welcome to Death Valley, where California's desert unfolds in
-                extremes of rugged beauty. From the shadowy Panamint Mountains
-                to the salt flats of Badwater Basin, explore wind-sculpted dunes
-                at Mesquite Flat and vibrant badlands at Zabriskie Point. Drive
-                through expansive desert landscapes, encountering resilient
-                flora and glimpses of wildlife. At night, marvel at the Milky
-                Way above this serene, timeless landscape.
-              </p>
-            </li>
-
-            <li class="cards__content">
-              <h2 class="cards__title">Joshua Tree</h2>
-              <img
-                src="./images/joshua-tree-national-park.webp"
-                alt="Joshua Tree"
-                class="cards__image"
-              />
-              <p class="cards__description">
-                Welcome to Joshua Tree National Park, where iconic Joshua trees
-                dot a desert landscape of rugged rock formations. Explore
-                surreal rock piles at Hidden Valley, hike Ryan Mountain for
-                towering views, and visit Barker Dam's historic petroglyphs. As
-                the sun sets, witness nature's artistry in the vibrant desert
-                sky, casting a magical glow over this serene wilderness.
-              </p>
-            </li>
-
-            <li class="cards__content">
-              <h2 class="cards__title">Kings Canyon</h2>
-              <img
-                src="./images/kings-canyon-national-park.jpg"
-                alt="Kings Canyon"
-                class="cards__image"
-              />
-              <p class="cards__description">
-                Welcome to Kings Canyon National Park, where towering sequoias
-                in Grant Grove lead to the dramatic Kings Canyon Scenic Byway.
-                Follow trails to majestic waterfalls like Roaring River Falls
-                and Mist Falls, and end your day at Panoramic Point for sweeping
-                views of the Sierra Nevada and the canyon below.
-              </p>
-            </li>
-
-            <li class="cards__content">
-              <h2 class="cards__title">Lassen Volcanic</h2>
-              <img
-                src="./images/lassen-volcanic-national-park.JPG"
-                alt="Lassen Volcanic"
-                class="cards__image"
-              />
-              <p class="cards__description">
-                Welcome to Lassen Volcanic National Park, where geothermal
-                features like Sulphur Works and Bumpass Hell showcase its
-                volcanic origins. Hike to Kings Creek Falls and drive the scenic
-                Lassen Volcanic Highway to Lassen Peak for panoramic views of
-                volcanic terrain. End your day at Manzanita Lake, surrounded by
-                serene landscapes under the starry sky.
-              </p>
-            </li>
-
-            <li class="cards__content">
-              <h2 class="cards__title">Pinnacles</h2>
-              <img
-                src="./images/pinnacles-national-park.jpg"
-                alt="Pinnacles"
-                class="cards__image"
-              />
-              <p class="cards__description">
-                Welcome to Pinnacles National Park, a hidden gem of California's
-                central coast known for its towering rock formations and
-                intricate caves carved by ancient volcanic activity. Hike
-                through chaparral-covered hillsides adorned with wildflowers,
-                explore Bear Gulch Cave's stalactites, and spot California
-                condors soaring overhead. End your day with a sunset hike to
-                High Peaks for panoramic views of rugged spires and distant
-                valleys, showcasing the park's timeless beauty.
-              </p>
-            </li>
-
-            <li class="cards__content">
-              <h2 class="cards__title">Sequoia</h2>
-              <img
-                src="./images/sequoia-national-park.jpg"
-                alt="Sequoia"
-                class="cards__image"
-              />
-              <p class="cards__description">
-                Welcome to Sequoia National Park, home to towering groves of
-                giant sequoias including the General Sherman Tree, the largest
-                living tree on Earth. Explore Crescent Meadow, hike among
-                wildflowers in lush meadows, and ascend Moro Rock for
-                breathtaking panoramic views. End your day at Tokopah Falls,
-                where cascading waters complement the park's serene beauty.
-              </p>
-            </li>
-
-            <li class="cards__content">
-              <h2 class="cards__title">Yosemite</h2>
-              <img
-                src="./images/yosemite-national-park.jpg"
-                alt="Yosemite"
-                class="cards__image"
-              />
-              <p class="cards__description">
-                Welcome to Yosemite National Park, a stunning landscape of
-                granite cliffs, towering waterfalls, and lush valleys. Explore
-                iconic landmarks like El Capitan and Half Dome in Yosemite
-                Valley, marvel at Yosemite Falls, hike among giant sequoias in
-                Mariposa Grove, and enjoy panoramic views from Glacier Point.
-                End your day at Bridalveil Fall, where misty waters complement
-                the park's natural splendor.
-              </p>
-            </li>
-          </ul>
+  <body class="page">
+    <div class="page__content">
+      <header class="header page__section">
+        <img
+          class="header__logo"
+          src="./images/Vector_Logo.svg"
+          alt="Around the U.S. Logo"
+        />
+      </header>
+      <main class="content">
+        <section class="profile page__section">
+          <div class="profile__container">
+            <img
+              class="profile__image"
+              src="./images/Avatar_Jacques.svg"
+              alt="Avatar"
+            />
+            <div class="profile__info">
+              <div class="profile__header">
+                <h1 class="profile__title" id="profile-title">
+                  Jacques Cousteau
+                </h1>
+                <button
+                  type="button"
+                  class="profile__edit-button"
+                  id="profile-edit-button"
+                ></button>
+              </div>
+              <p class="profile__subtitle" id="profile-subtitle">Explorer</p>
+            </div>
+          </div>
+          <button
+            type="button"
+            class="profile__add-card-button"
+            id="add-card-button"
+          ></button>
         </section>
+        <section class="cards page__section">
+          <ul class="cards__list" id="card-list"></ul>
+        </section>
+      </main>
+
+      <footer class="footer page__section">
+        <p class="footer__copyright">© 2024 Grace Persion</p>
+      </footer>
+      <!-- Profile edit modal -->
+      <div class="modal" id="profile-edit-modal">
+        <div class="modal__container">
+          <button
+            type="button"
+            class="modal__close-button"
+            id="profile-close-button"
+          ></button>
+          <p class="modal__heading">Edit Profile</p>
+          <form class="modal__form" id="profile-edit-form">
+            <input
+              type="text"
+              name="title"
+              class="modal__input"
+              placeholder="Name"
+              id="profile-edit-title"
+              required
+              minlength="2"
+              maxlength="40"
+            />
+            <input
+              type="text"
+              name="subtitle"
+              class="modal__input"
+              placeholder="Description"
+              id="profile-edit-subtitle"
+              required
+              minlength="2"
+              maxlength="200"
+            />
+            <button
+              type="submit"
+              class="modal__save-button"
+              id="profile-save-button"
+            >
+              Save
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Image add modal -->
+      <div class="modal" id="add-card-modal">
+        <div class="modal__container">
+          <button
+            type="button"
+            class="modal__close-button"
+            id="profile-add-card-close-button"
+          ></button>
+          <p class="modal__heading">New Place</p>
+          <form class="modal__form" id="profile-add-card-form">
+            <input
+              type="text"
+              name="title"
+              class="modal__input"
+              placeholder="Title"
+              id="profile-add-card-title"
+              required
+              minlength="1"
+              maxlength="30"
+            />
+            <input
+              type="text"
+              name="image"
+              class="modal__input"
+              placeholder="Image Link"
+              id="profile-add-card-image"
+              required
+            />
+            <button
+              type="submit"
+              class="modal__save-button"
+              id="profile-add-card-create-button"
+            >
+              Create
+            </button>
+          </form>
+        </div>
+      </div>
+      <!-- Card image modal -->
+      <div class="modal" id="card-image-modal">
+        <div class="modal__container-preview">
+          <button
+            type="button"
+            class="modal__close-button"
+            id="card-image-close-button"
+          ></button>
+          <img src="" class="modal__card-image" alt="" id="card-full-image" />
+          <p class="modal__caption" id="card-caption"></p>
+        </div>
       </div>
     </div>
+    <!-- Page content -->
 
-    <!-- Scrolling car -->
-    <div class="container">
-      <div class="mouse-wheel">
-        <img src="./images/vec_car.png" alt="" class="car" />
-      </div>
-    </div>
-
-    <!-- JS for Scrolling Effect -->
-    <script src="index.js"></script>
+    <!-- TEMPLATE -->
+    <template id="card-template">
+      <li class="cards__content">
+        <img src="" class="cards__image" alt="" id="card-image" />
+        <div class="cards__description" id="card-description">
+          <h2 class="cards__title" id="card-title"></h2>
+          <button
+            class="cards__like-button"
+            type="button"
+            id="card-like-button"
+          ></button>
+          <button
+            class="cards__delete-button"
+            type="button"
+            id="card-delete-button"
+          ></button>
+        </div></li
+    ></template>
+    <script src="./scripts/index.js"></script>
+    <script src="./scripts/validate.js"></script>
   </body>
 </html>

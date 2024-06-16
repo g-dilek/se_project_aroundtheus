@@ -1,6 +1,6 @@
-# June Code Jam 2024: Redwood Rangers
+# Project 3: Around The U.S.
 
-This web app was created by Tripleten bootcamp students collaborating across data science and software engineering. It was created using HTML, CSS, and Javascript, based on a given design brief.
+This is the third project of the Software Engineering program at TripleTen. It was created using HTML, CSS, and Javascript, based on a given design brief.
 
 ## Project Features
 
@@ -12,4 +12,4 @@ This web app was created by Tripleten bootcamp students collaborating across dat
 
 ## Link
 
-You can view and interact with the site here:
+You can view and interact with the site here: https://g-dilek.github.io/se_project_aroundtheus
