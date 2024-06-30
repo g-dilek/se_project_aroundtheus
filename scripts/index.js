@@ -174,7 +174,7 @@ modals.forEach((modal) => {
 document.addEventListener("keydown", (evt) => {
   if (evt.key === "Escape") {
     const currentModal = findOpenedModal();
-    return currentModal;
+    closeModal(currentModal);
   }
 });
 
