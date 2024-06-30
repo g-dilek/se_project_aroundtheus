@@ -19,6 +19,18 @@
   transition-delay: 0s;
 }
 
+.modal__overlay {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s linear 0.5s, opacity 0.5s linear;
+}
+
+.modal__overlay_active {
+  visibility: visible;
+  opacity: 1;
+  transition-delay: 0s;
+}
+
 .modal__heading {
   font-weight: 900;
   font-size: 24px;
@@ -112,6 +124,33 @@
   margin: auto;
   max-width: 90vw;
   max-height: 75vh;
+}
+
+.modal__save-button_disabled {
+  opacity: 0.8;
+  cursor: auto;
+}
+
+.modal__error {
+  font-size: 12px;
+  min-height: 15px;
+  line-height: 24px;
+  color: #ff0000;
+  top: calc(100% + 5px);
+  position: relative;
+  min-height: 20px;
+  transition: opacity 0.3s;
+  opacity: 0;
+  margin: 0;
+}
+
+.modal__input_type_error {
+  border-color: #ff0000;
+  margin-bottom: 0;
+}
+
+.modal__error_visible {
+  opacity: 1;
 }
 
 @media screen and (max-width: 810px) {

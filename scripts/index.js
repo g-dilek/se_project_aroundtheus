@@ -49,26 +49,46 @@ const addCardModal = document.querySelector("#add-card-modal");
 const addCardCloseButton = document.querySelector(
   "#profile-add-card-close-button"
 );
-const editCardTitle = document.querySelector("#profile-add-card-title");
-const editCardImage = document.querySelector("#profile-add-card-image");
-const addCardForm = document.querySelector("#profile-add-card-form");
+const editCardTitle = document.querySelector("#add-card-title");
+const editCardImage = document.querySelector("#add-card-image");
+const addCardForm = document.querySelector("#add-card-form");
 
 const closeButton = document.querySelectorAll(".modal__close-button");
+const overlays = document.querySelectorAll(".modal__overlay");
+const modals = document.querySelectorAll(".modal");
+
+const modalSelectors = {
+  profileEdit: "#profile-edit-modal",
+  addCard: "#add-card-modal",
+  cardImage: "#card-image-modal",
+};
 
 // ! FUNCTIONS
 
-function closePopUp(modal) {
+function closeModal(modal) {
   modal.classList.remove("modal_opened");
+  modal.classList.remove("modal__overlay_active");
 }
 
 function openModal(modal) {
   modal.classList.add("modal_opened");
+  modal.classList.add("modal__overlay_active");
+  // Sets up which modal will be closed when overlay clicked
+  currentModal = modal;
+}
+
+function findOpenedModal() {
+  return document.querySelector(".modal_opened");
 }
 
 function fillProfileInputs() {
   // Trim removes any whitespace before text
   profileEditTitle.value = profileTitle.textContent.trim();
   profileEditSubtitle.value = profileSubtitle.textContent;
+
+  // updates button state even though no new input entered
+  profileEditTitle.dispatchEvent(new Event("input"));
+  profileEditSubtitle.dispatchEvent(new Event("input"));
   // Automatically puts focus on title input when opened for easy editing
   profileEditTitle.focus();
   profileEditTitle.select();
@@ -127,20 +147,36 @@ function handleProfileEditSubmit(evt) {
   evt.preventDefault();
   profileTitle.textContent = profileEditTitle.value;
   profileSubtitle.textContent = profileEditSubtitle.value;
-  closePopUp(profileEditModal);
+  closeModal(profileEditModal);
 }
 
 // When add card submitted: prevents refresh, closes add card modal,
 // adds new card, resets title and image values only after submit
 function handleAddCardSubmit(evt) {
   evt.preventDefault();
-  closePopUp(addCardModal);
+  closeModal(addCardModal);
   addCard();
   editCardTitle.value = "";
   editCardImage.value = "";
 }
 
 // ! EVENT LISTENERS
+
+modals.forEach((modal) => {
+  modal.addEventListener("click", (evt) => {
+    if (evt.target.classList.contains("modal")) {
+      closeModal(modal);
+    }
+  });
+});
+
+// When esc key pressed, close modal
+document.addEventListener("keydown", (evt) => {
+  if (evt.key === "Escape") {
+    const currentModal = findOpenedModal();
+    return currentModal;
+  }
+});
 
 // When edit button clicked, open profile modal
 profileEditButton.addEventListener("click", () => {
@@ -154,11 +190,11 @@ addCardButton.addEventListener("click", () => {
   focusCardFormInput();
 });
 
-// When a modal close button clicked, check closest modal and run closePopUp() on it
+// When a modal close button clicked, check closest modal and run closeModal() on it
 closeButton.forEach((button) => {
   const closestModal = button.closest(".modal");
   button.addEventListener("click", () => {
-    closePopUp(closestModal);
+    closeModal(closestModal);
   });
 });
 
