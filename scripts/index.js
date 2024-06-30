@@ -53,7 +53,7 @@ const editCardTitle = document.querySelector("#add-card-title");
 const editCardImage = document.querySelector("#add-card-image");
 const addCardForm = document.querySelector("#add-card-form");
 
-const closeButton = document.querySelectorAll(".modal__close-button");
+const closeButtons = document.querySelectorAll(".modal__close-button");
 const overlays = document.querySelectorAll(".modal__overlay");
 const modals = document.querySelectorAll(".modal");
 
@@ -63,18 +63,27 @@ const modalSelectors = {
   cardImage: "#card-image-modal",
 };
 
-// ! FUNCTIONS
+// listens for escape key when modal opened
+const keydownListener = (evt) => {
+  if (evt.key === "Escape" && findOpenedModal() != null) {
+    const currentModal = findOpenedModal();
+    closeModal(currentModal);
+  }
+};
 
-function closeModal(modal) {
-  modal.classList.remove("modal_opened");
-  modal.classList.remove("modal__overlay_active");
-}
+// ! FUNCTIONS
 
 function openModal(modal) {
   modal.classList.add("modal_opened");
   modal.classList.add("modal__overlay_active");
-  // Sets up which modal will be closed when overlay clicked
-  currentModal = modal;
+  // escape key event listener activates when modal is opened
+  document.addEventListener("keydown", keydownListener);
+}
+
+function closeModal(modal) {
+  modal.classList.remove("modal_opened");
+  modal.classList.remove("modal__overlay_active");
+  document.removeEventListener("keydown", keydownListener);
 }
 
 function findOpenedModal() {
@@ -95,6 +104,8 @@ function fillProfileInputs() {
 }
 
 function focusCardFormInput() {
+  editCardTitle.dispatchEvent(new Event("input"));
+  editCardImage.dispatchEvent(new Event("input"));
   // Automatically puts focus on card title input when opened for easy editing
   editCardTitle.focus();
   editCardTitle.select();
@@ -170,14 +181,6 @@ modals.forEach((modal) => {
   });
 });
 
-// When esc key pressed, close modal
-document.addEventListener("keydown", (evt) => {
-  if (evt.key === "Escape") {
-    const currentModal = findOpenedModal();
-    closeModal(currentModal);
-  }
-});
-
 // When edit button clicked, open profile modal
 profileEditButton.addEventListener("click", () => {
   openModal(profileEditModal);
@@ -191,7 +194,7 @@ addCardButton.addEventListener("click", () => {
 });
 
 // When a modal close button clicked, check closest modal and run closeModal() on it
-closeButton.forEach((button) => {
+closeButtons.forEach((button) => {
   const closestModal = button.closest(".modal");
   button.addEventListener("click", () => {
     closeModal(closestModal);
@@ -209,33 +212,3 @@ initialCards.forEach((cardData) => {
   const cardElement = getCardElement(cardData);
   cardListEl.append(cardElement);
 });
-
-// ! SPRINT 6
-
-// ! NUMBER 1
-// * Validate "Edit Profile"
-// The 'edit profile' form should have validations for the
-// name and about. "Name" - 2-40char. "About" - 2-200char.
-// Use Figma for design of error message elements.
-
-// Make 'Save' button inactive to start and if any field
-// doesn't pass validation. When both pass, 'Save' button
-// should become active. Again, use Figma colors/design.
-// When a modal window is open and you reset input field
-// values, make sure to disable 'save' button + add corre-
-// sponding class.
-
-// Configuration object
-// A way of passing multiple recurring parameters to
-// functions in Javascript. querySelectors are this!
-
-// ! NUMBER 2
-// * Validate "New Place"
-// "Title" - 1-30char. Image URL field must be URL.
-// Do the same stuff as above.
-
-// ! NUMBER 3
-// * Code the ability to close modal by clicking on background
-
-// ! NUMBER 4
-// * Code ability to close modal with Esc key

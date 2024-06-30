@@ -57,6 +57,7 @@ function setEventListeners(formEl, modalInputSelectors) {
   // makes 1 group of inputs listed per modal (name, desc, etc)
   const inputEls = Array.from(formEl.querySelectorAll(inputSelector));
   const submitButton = formEl.querySelector(submitButtonSelector);
+  toggleButtonState(inputEls, submitButton, modalInputSelectors);
   inputEls.forEach((inputEl) => {
     // listens for new text in input boxes
     // "change" occurs when user clicks out of textbox (more common)
@@ -80,10 +81,8 @@ function checkInputValidity(
   // this is the automatic message from HTML that gives validity check and message:
   if (!inputEl.validity.valid) {
     showInputError(formEl, inputEl, modalInputSelectors);
-    disableButton(submitButton, inactiveButtonClass);
   } else {
     hideInputError(formEl, inputEl, modalInputSelectors);
-    enableButton(submitButton, inactiveButtonClass);
   }
 }
 
@@ -112,7 +111,7 @@ function enableValidation(modalInputSelectors) {
 
     const inputEls = Array.from(formEl.querySelectorAll(inputSelector));
     const submitButton = formEl.querySelector(submitButtonSelector);
-    toggleButtonState(inputEls, submitButton, modalInputSelectors);
+
     // look for all inputs inside of form tags
     // loop through all inputs, check validity
 
