@@ -65,6 +65,7 @@
   border: none;
   transition: 0.3s linear;
   cursor: pointer;
+  margin-top: 18px;
 }
 
 .modal__save-button:hover {
@@ -169,12 +170,13 @@
 
   .modal__input {
     max-width: 238px;
-    margin-bottom: 45px;
+    /* margin-bottom: 45px; - what it was before edits for error styling */
   }
 
   .modal__form {
     padding-left: 22px;
     padding-right: 22px;
+    width: 238px;
   }
 
   .modal__heading {
@@ -191,5 +193,22 @@
     padding-bottom: 10.62px;
     bottom: calc(100% + 13px);
     left: calc(100% - 25px);
+  }
+
+  .modal__error {
+    max-width: 238px;
+    bottom: calc(50% - 1px);
+    right: calc(50% - 120px);
+    padding: 0;
+    margin: 0;
+    line-height: 12px;
+  }
+
+  .modal__save-button + .modal__error {
+    padding-bottom: 58px;
+  }
+
+  .modal__container + .modal__error {
+    padding-bottom: 58px;
   }
 }
