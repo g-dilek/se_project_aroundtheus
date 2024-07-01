@@ -68,8 +68,21 @@
   margin-top: 18px;
 }
 
+.modal__save-button_disabled {
+  background-color: #fff;
+  color: #000;
+  opacity: 0.2;
+  border-radius: 2px;
+  border: #000 1px solid;
+}
+
 .modal__save-button:hover {
   opacity: 0.8;
+}
+
+.modal__save-button_disabled:hover {
+  opacity: 0.2;
+  cursor: auto;
 }
 
 .modal__input {
@@ -126,11 +139,6 @@
   margin: auto;
   max-width: 90vw;
   max-height: 75vh;
-}
-
-.modal__save-button_disabled {
-  opacity: 0.8;
-  cursor: auto;
 }
 
 .modal__input_container {

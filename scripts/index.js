@@ -67,7 +67,9 @@ const modalSelectors = {
 const keydownListener = (evt) => {
   if (evt.key === "Escape" && findOpenedModal() != null) {
     const currentModal = findOpenedModal();
-    closeModal(currentModal);
+    if (currentModal) {
+      closeModal(currentModal);
+    }
   }
 };
 
@@ -104,8 +106,6 @@ function fillProfileInputs() {
 }
 
 function focusCardFormInput() {
-  editCardTitle.dispatchEvent(new Event("input"));
-  editCardImage.dispatchEvent(new Event("input"));
   // Automatically puts focus on card title input when opened for easy editing
   editCardTitle.focus();
   editCardTitle.select();

@@ -51,8 +51,7 @@ function setEventListeners(formEl, modalInputSelectors) {
   // make new variable that is the inputSelector property
   // of object modalInputSelectors
   // same as const inputSelector = modalInputSelectors.inputSelector
-  const { inputSelector } = modalInputSelectors;
-  const { submitButtonSelector } = modalInputSelectors;
+  const { inputSelector, submitButtonSelector } = modalInputSelectors;
   // shorthand for modal form inputs
   // makes 1 group of inputs listed per modal (name, desc, etc)
   const inputEls = Array.from(formEl.querySelectorAll(inputSelector));
@@ -106,11 +105,11 @@ function enableValidation(modalInputSelectors) {
 
     setEventListeners(formEl, modalInputSelectors);
 
-    const { inputSelector } = modalInputSelectors;
-    const { submitButtonSelector } = modalInputSelectors;
+    // const { inputSelector } = modalInputSelectors;
+    // const { submitButtonSelector } = modalInputSelectors;
 
-    const inputEls = Array.from(formEl.querySelectorAll(inputSelector));
-    const submitButton = formEl.querySelector(submitButtonSelector);
+    // const inputEls = Array.from(formEl.querySelectorAll(inputSelector));
+    // const submitButton = formEl.querySelector(submitButtonSelector);
 
     // look for all inputs inside of form tags
     // loop through all inputs, check validity
