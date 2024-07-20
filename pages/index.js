@@ -1,4 +1,5 @@
 import Card, { addCard } from "../components/bingus.js";
+import FormValidator from "../components/FormValidator.js";
 
 const initialCards = [
   {
@@ -37,21 +38,7 @@ const profileSubtitle = document.querySelector("#profile-subtitle");
 const profileEditTitle = document.querySelector("#profile-edit-title");
 const profileEditSubtitle = document.querySelector("#profile-edit-subtitle");
 const profileEditForm = document.querySelector("#profile-edit-form");
-
-// const cardTemplate =
-//   document.querySelector("#card-template").content.firstElementChild;
-// const cardListEl = document.querySelector("#card-list");
-// const cardImageModal = document.querySelector("#card-image-modal");
-// const cardImageCloseButton = document.querySelector("#card-image-close-button");
-// const cardFullImage = document.querySelector("#card-full-image");
-// const cardCaption = document.querySelector("#card-caption");
-
-// const addCardButton = document.querySelector("#add-card-button");
-// const addCardModal = document.querySelector("#add-card-modal");
-// const addCardCloseButton = document.querySelector("#add-card-close-button");
-// const editCardTitle = document.querySelector("#add-card-title");
-// const editCardImage = document.querySelector("#add-card-image");
-// const addCardForm = document.querySelector("#add-card-form");
+const addCardForm = document.querySelector("#add-card-form");
 
 const closeButtons = document.querySelectorAll(".modal__close-button");
 const overlays = document.querySelectorAll(".modal__overlay");
@@ -82,7 +69,7 @@ export function openModal(modal) {
   document.addEventListener("keydown", keydownListener);
 }
 
-function closeModal(modal) {
+export function closeModal(modal) {
   modal.classList.remove("modal_opened");
   modal.classList.remove("modal__overlay_active");
   document.removeEventListener("keydown", keydownListener);
@@ -146,6 +133,8 @@ closeButtons.forEach((button) => {
 // add text entered to profile modal
 profileEditForm.addEventListener("submit", handleProfileEditSubmit);
 
+// ! CARDS
+
 // Loop through initialCards array and create cards
 initialCards.forEach((cardData) => {
   // Select the card template from HTML
@@ -157,11 +146,28 @@ initialCards.forEach((cardData) => {
 
   // Get the HTML representation of the card element
   const cardElement = card.getCardElement();
-
   // Append the card element to the card list
   cardListEl.appendChild(cardElement);
 });
 
+// Add card
 initialCards.forEach((cardData) => {
   addCard(cardData);
 });
+
+// ! FORM VALIDATOR
+
+const settings = {
+  formSelector: ".modal__form",
+  inputSelector: ".modal__input",
+  submitButtonSelector: ".modal__save-button",
+  inactiveButtonClass: "modal__save-button_disabled",
+  inputErrorClass: "modal__input_type_error",
+  errorClass: "modal__error_visible",
+};
+
+const editFormValidator = new FormValidator(settings, profileEditForm);
+const addCardFormValidator = new FormValidator(settings, addCardForm);
+
+editFormValidator.enableValidation();
+addCardFormValidator.enableValidation();

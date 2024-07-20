@@ -1,4 +1,4 @@
-import { openModal } from "../pages/index.js";
+import { openModal, closeModal } from "../pages/index.js";
 
 const cardTemplate =
   document.querySelector("#card-template").content.firstElementChild;
