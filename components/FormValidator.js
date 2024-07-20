@@ -18,7 +18,7 @@ export default class FormValidator {
 
   _setEventListeners() {
     this._form.addEventListener("submit", (evt) => {
-      evt.preventDefault(); // Prevent form submission
+      evt.preventDefault();
     });
 
     this._inputEls.forEach((inputEl) => {
@@ -83,9 +83,9 @@ export default class FormValidator {
 
     this._form.addEventListener("submit", (evt) => {
       evt.preventDefault();
-      // Optionally, you can validate all inputs before allowing submission
-      // this._inputEls.forEach(inputEl => this._checkInputValidity(inputEl));
-      // this._toggleButtonState();
+      // Validate all inputs before allowing submission
+      this._inputEls.forEach((inputEl) => this._checkInputValidity(inputEl));
+      this._toggleButtonState();
     });
   }
 }

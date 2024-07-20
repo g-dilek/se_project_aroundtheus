@@ -28,6 +28,15 @@ const initialCards = [
   },
 ];
 
+const settings = {
+  formSelector: ".modal__form",
+  inputSelector: ".modal__input",
+  submitButtonSelector: ".modal__save-button",
+  inactiveButtonClass: "modal__save-button_disabled",
+  inputErrorClass: "modal__input_type_error",
+  errorClass: "modal__error_visible",
+};
+
 // ! ELEMENTS
 
 const profileEditButton = document.querySelector("#profile-edit-button");
@@ -38,11 +47,17 @@ const profileSubtitle = document.querySelector("#profile-subtitle");
 const profileEditTitle = document.querySelector("#profile-edit-title");
 const profileEditSubtitle = document.querySelector("#profile-edit-subtitle");
 const profileEditForm = document.querySelector("#profile-edit-form");
-const addCardForm = document.querySelector("#add-card-form");
 
 const closeButtons = document.querySelectorAll(".modal__close-button");
 const overlays = document.querySelectorAll(".modal__overlay");
 const modals = document.querySelectorAll(".modal");
+
+// Global Constants
+export const addCardForm = document.querySelector("#add-card-form");
+export const addCardModal = document.querySelector("#add-card-modal");
+export const cardListEl = document.querySelector("#card-list");
+export const editCardTitle = document.querySelector("#add-card-title");
+export const editCardImage = document.querySelector("#add-card-image");
 
 const modalSelectors = {
   profileEdit: "#profile-edit-modal",
@@ -182,15 +197,6 @@ initialCards.forEach((cardData) => {
 });
 
 // ! FORM VALIDATOR
-
-const settings = {
-  formSelector: ".modal__form",
-  inputSelector: ".modal__input",
-  submitButtonSelector: ".modal__save-button",
-  inactiveButtonClass: "modal__save-button_disabled",
-  inputErrorClass: "modal__input_type_error",
-  errorClass: "modal__error_visible",
-};
 
 const editFormValidator = new FormValidator(settings, profileEditForm);
 const addCardFormValidator = new FormValidator(settings, addCardForm);

@@ -1,16 +1,13 @@
-import { openModal, closeModal } from "../pages/index.js";
-
-const cardTemplate =
-  document.querySelector("#card-template").content.firstElementChild;
-const cardListEl = document.querySelector("#card-list");
-const cardImageModal = document.querySelector("#card-image-modal");
-const cardFullImage = document.querySelector("#card-full-image");
-const cardCaption = document.querySelector("#card-caption");
-
-const addCardButton = document.querySelector("#add-card-button");
-const addCardModal = document.querySelector("#add-card-modal");
-const editCardTitle = document.querySelector("#add-card-title");
-const editCardImage = document.querySelector("#add-card-image");
+// Import global functions and elements
+import {
+  openModal,
+  closeModal,
+  cardListEl,
+  addCardForm,
+  addCardModal,
+  editCardTitle,
+  editCardImage,
+} from "../pages/index.js";
 
 export default class Card {
   constructor(data, cardSelector) {
@@ -29,10 +26,11 @@ export default class Card {
 
   // Event listeners
   _setEventListeners() {
-    const likeButton = this._cardElement.querySelector(".cards__like-button");
-    const deleteButton = this._cardElement.querySelector(
-      ".cards__delete-button"
-    );
+    // Elements
+    const likeButton = this._cardElement.querySelector("#card-like-button");
+    const deleteButton = this._cardElement.querySelector("#card-delete-button");
+    const cardImageEl = this._cardElement.querySelector("#card-image");
+    const addCardButton = document.querySelector("#add-card-button");
 
     // Like button event listener
     likeButton.addEventListener("click", () => {
@@ -44,14 +42,10 @@ export default class Card {
       this._handleDeleteButton();
     });
 
-    // Modal preview image listener
-    const cardImageEl = this._cardElement.querySelector("#card-image");
+    // Modal preview image event listener
     cardImageEl.addEventListener("click", this._handleImageClick.bind(this));
 
-    // addCardForm.addEventListener(
-    //   "submit",
-    //   this._handleAddCardSubmit.bind(this)
-    // );
+    // Add card event listener
 
     addCardButton.addEventListener("click", () => {
       openModal(addCardModal);
@@ -93,13 +87,19 @@ export default class Card {
   }
 
   _handleImageClick() {
+    const cardImageModal = document.querySelector("#card-image-modal");
     openModal(cardImageModal);
+    const cardFullImage = document.querySelector("#card-full-image");
     cardFullImage.src = this._link;
     cardFullImage.alt = this._name;
+    // Caption refers to the text under the full image modal - same as name
+    const cardCaption = document.querySelector("#card-caption");
     cardCaption.textContent = this._name;
   }
 
   _getCardElement() {
+    const cardTemplate =
+      document.querySelector("#card-template").content.firstElementChild;
     const cardElement = cardTemplate.cloneNode(true);
     const cardImageEl = cardElement.querySelector("#card-image");
     const cardTitleEl = cardElement.querySelector("#card-title");
