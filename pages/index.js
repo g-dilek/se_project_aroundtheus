@@ -1,4 +1,4 @@
-import Card, { addCard } from "../components/bingus.js";
+import Card, { addCard } from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
 
 const initialCards = [
@@ -132,6 +132,32 @@ closeButtons.forEach((button) => {
 // When 'save' clicked, prevent page refreshing and
 // add text entered to profile modal
 profileEditForm.addEventListener("submit", handleProfileEditSubmit);
+
+addCardForm.addEventListener("submit", (evt) => {
+  evt.preventDefault();
+  const editCardTitle = document.querySelector("#add-card-title");
+  const editCardImage = document.querySelector("#add-card-image");
+  const newCardName = editCardTitle.value;
+  const newCardLink = editCardImage.value;
+  const cardListEl = document.querySelector("#card-list");
+  const addCardModal = document.querySelector("#add-card-modal");
+
+  if (newCardName && newCardLink) {
+    // Basic validation
+    const newCardData = { name: newCardName, link: newCardLink };
+
+    // Create a new Card instance
+    const card = new Card(newCardData, "#card-template");
+
+    // Add new card to the card list DOM
+    cardListEl.prepend(card.getCardElement());
+
+    // Close modal and reset input values
+    closeModal(addCardModal);
+    editCardTitle.value = "";
+    editCardImage.value = "";
+  }
+});
 
 // ! CARDS
 

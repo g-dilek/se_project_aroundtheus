@@ -4,22 +4,20 @@ const cardTemplate =
   document.querySelector("#card-template").content.firstElementChild;
 const cardListEl = document.querySelector("#card-list");
 const cardImageModal = document.querySelector("#card-image-modal");
-const cardImageCloseButton = document.querySelector("#card-image-close-button");
 const cardFullImage = document.querySelector("#card-full-image");
 const cardCaption = document.querySelector("#card-caption");
 
 const addCardButton = document.querySelector("#add-card-button");
 const addCardModal = document.querySelector("#add-card-modal");
-const addCardCloseButton = document.querySelector("#add-card-close-button");
 const editCardTitle = document.querySelector("#add-card-title");
 const editCardImage = document.querySelector("#add-card-image");
-const addCardForm = document.querySelector("#add-card-form");
 
 export default class Card {
   constructor(data, cardSelector) {
     this._name = data.name;
     this._link = data.link;
-    this._cardElement = this._getCardElement();
+    this._cardSelector = cardSelector;
+    this._cardElement = this._getCardElement(data);
     this._setEventListeners();
   }
 
@@ -35,8 +33,8 @@ export default class Card {
     const deleteButton = this._cardElement.querySelector(
       ".cards__delete-button"
     );
-    // Like button event listener
 
+    // Like button event listener
     likeButton.addEventListener("click", () => {
       this._handleLikeButton();
     });
@@ -50,7 +48,10 @@ export default class Card {
     const cardImageEl = this._cardElement.querySelector("#card-image");
     cardImageEl.addEventListener("click", this._handleImageClick.bind(this));
 
-    addCardForm.addEventListener("submit", () => this._handleAddCardSubmit());
+    // addCardForm.addEventListener(
+    //   "submit",
+    //   this._handleAddCardSubmit.bind(this)
+    // );
 
     addCardButton.addEventListener("click", () => {
       openModal(addCardModal);
@@ -58,12 +59,23 @@ export default class Card {
     });
   }
 
+  _addCard() {
+    // Creates new card and adds to array
+    const newCardName = editCardTitle.value;
+    const newCardLink = editCardImage.value;
+    const newCard = { name: newCardName, link: newCardLink };
+    // Generate HTML for new card
+    const newCardElement = this._getCardElement(newCard);
+    // Add new card HTML to card list
+    cardListEl.prepend(newCardElement);
+  }
+
   // When add card submitted: prevents refresh, closes add card modal,
   // adds new card, resets title and image values only after submit
   _handleAddCardSubmit(evt) {
     evt.preventDefault();
     closeModal(addCardModal);
-    addCard();
+    this._addCard();
     editCardTitle.value = "";
     editCardImage.value = "";
   }
@@ -81,7 +93,7 @@ export default class Card {
   }
 
   _handleImageClick() {
-    openModal(cardImageModal); // Assuming cardImageModal is accessible here
+    openModal(cardImageModal);
     cardFullImage.src = this._link;
     cardFullImage.alt = this._name;
     cardCaption.textContent = this._name;
@@ -100,17 +112,6 @@ export default class Card {
 
   getCardElement() {
     return this._cardElement;
-  }
-
-  _addCard() {
-    // Creates new card and adds to beginning of array
-    const newCardName = editCardTitle.value;
-    const newCardLink = editCardImage.value;
-    const newCard = { name: newCardName, link: newCardLink };
-    // Generate HTML for new card
-    const newCardElement = getCardElement(newCard);
-    // Append new card HTML to card list
-    cardListEl.prepend(newCardElement);
   }
 }
 
