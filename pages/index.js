@@ -1,4 +1,4 @@
-import Card, { addCard } from "../components/Card.js";
+import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
 
 const initialCards = [
@@ -46,18 +46,22 @@ const profileTitle = document.querySelector("#profile-title");
 const profileSubtitle = document.querySelector("#profile-subtitle");
 const profileEditTitle = document.querySelector("#profile-edit-title");
 const profileEditSubtitle = document.querySelector("#profile-edit-subtitle");
-const profileEditForm = document.querySelector("#profile-edit-form");
+const profileEditForm = document.forms["profile-edit-form"];
 
 const closeButtons = document.querySelectorAll(".modal__close-button");
 const overlays = document.querySelectorAll(".modal__overlay");
 const modals = document.querySelectorAll(".modal");
 
-// Global Constants
-export const addCardForm = document.querySelector("#add-card-form");
-export const addCardModal = document.querySelector("#add-card-modal");
-export const cardListEl = document.querySelector("#card-list");
-export const editCardTitle = document.querySelector("#add-card-title");
-export const editCardImage = document.querySelector("#add-card-image");
+const addCardForm = document.forms["add-card-form"];
+
+const addCardButton = document.querySelector("#add-card-button");
+
+const editCardTitle = document.querySelector("#add-card-title");
+const editCardImage = document.querySelector("#add-card-image");
+const newCardName = editCardTitle.value;
+const newCardLink = editCardImage.value;
+const cardListEl = document.querySelector("#card-list");
+const addCardModal = document.querySelector("#add-card-modal");
 
 const modalSelectors = {
   profileEdit: "#profile-edit-modal",
@@ -65,9 +69,24 @@ const modalSelectors = {
   cardImage: "#card-image-modal",
 };
 
+// ! FUNCTIONS
+
+function openModal(modal) {
+  modal.classList.add("modal_opened");
+  modal.classList.add("modal__overlay_active");
+  // escape key event listener activates when modal is opened
+  document.addEventListener("keydown", keydownListener);
+}
+
+function closeModal(modal) {
+  modal.classList.remove("modal_opened");
+  modal.classList.remove("modal__overlay_active");
+  document.removeEventListener("keydown", keydownListener);
+}
+
 // listens for escape key when modal opened
 const keydownListener = (evt) => {
-  if (evt.key === "Escape" && findOpenedModal() != null) {
+  if (evt.key === "Escape") {
     const currentModal = findOpenedModal();
     if (currentModal) {
       closeModal(currentModal);
@@ -75,19 +94,10 @@ const keydownListener = (evt) => {
   }
 };
 
-// ! FUNCTIONS
-
-export function openModal(modal) {
-  modal.classList.add("modal_opened");
-  modal.classList.add("modal__overlay_active");
-  // escape key event listener activates when modal is opened
-  document.addEventListener("keydown", keydownListener);
-}
-
-export function closeModal(modal) {
-  modal.classList.remove("modal_opened");
-  modal.classList.remove("modal__overlay_active");
-  document.removeEventListener("keydown", keydownListener);
+function focusCardFormInput() {
+  // Automatically puts focus on card title input when opened for easy editing
+  editCardTitle.focus();
+  editCardTitle.select();
 }
 
 function findOpenedModal() {
@@ -107,6 +117,26 @@ function fillProfileInputs() {
   profileEditTitle.select();
 }
 
+// Function to create a new card element
+function createCard(item) {
+  const card = new Card(item, "#card-template", handleCardImageClick);
+  return card.getCardElement();
+}
+
+// Function to add a new card to the DOM
+function addCard(item) {
+  const cardElement = createCard(item);
+  cardListEl.prepend(cardElement);
+}
+
+// ! DISPLAY INITIAL CARDS
+
+// Add initial cards
+initialCards.forEach((cardData) => {
+  const cardElement = createCard(cardData);
+  cardListEl.appendChild(cardElement);
+});
+
 // ! EVENT HANDLERS
 
 // Prevents page from refreshing when 'save' is clicked
@@ -116,6 +146,33 @@ function handleProfileEditSubmit(evt) {
   profileTitle.textContent = profileEditTitle.value;
   profileSubtitle.textContent = profileEditSubtitle.value;
   closeModal(profileEditModal);
+}
+
+// When add card submitted: prevents refresh, closes add card modal,
+// adds new card, resets title and image values only after submit
+function handleAddCardSubmit(evt) {
+  evt.preventDefault();
+  const newCardData = {
+    name: editCardTitle.value,
+    link: editCardImage.value,
+  };
+  addCard(newCardData);
+  closeModal(addCardModal);
+  editCardTitle.value = "";
+  editCardImage.value = "";
+}
+
+// Handle image click
+function handleCardImageClick(cardData) {
+  const cardImageModal = document.querySelector("#card-image-modal");
+  openModal(cardImageModal);
+
+  const cardFullImage = document.querySelector("#card-full-image");
+  cardFullImage.src = cardData.link;
+  cardFullImage.alt = cardData.name;
+
+  const cardCaption = document.querySelector("#card-caption");
+  cardCaption.textContent = cardData.name;
 }
 
 // ! EVENT LISTENERS
@@ -132,6 +189,7 @@ modals.forEach((modal) => {
 profileEditButton.addEventListener("click", () => {
   openModal(profileEditModal);
   fillProfileInputs();
+  editFormValidator.resetValidation();
 });
 
 // When add card button clicked, open modal
@@ -148,58 +206,31 @@ closeButtons.forEach((button) => {
 // add text entered to profile modal
 profileEditForm.addEventListener("submit", handleProfileEditSubmit);
 
-addCardForm.addEventListener("submit", (evt) => {
-  evt.preventDefault();
-  const editCardTitle = document.querySelector("#add-card-title");
-  const editCardImage = document.querySelector("#add-card-image");
-  const newCardName = editCardTitle.value;
-  const newCardLink = editCardImage.value;
-  const cardListEl = document.querySelector("#card-list");
-  const addCardModal = document.querySelector("#add-card-modal");
-
-  if (newCardName && newCardLink) {
-    // Basic validation
-    const newCardData = { name: newCardName, link: newCardLink };
-
-    // Create a new Card instance
-    const card = new Card(newCardData, "#card-template");
-
-    // Add new card to the card list DOM
-    cardListEl.prepend(card.getCardElement());
-
-    // Close modal and reset input values
-    closeModal(addCardModal);
-    editCardTitle.value = "";
-    editCardImage.value = "";
-  }
+addCardButton.addEventListener("click", () => {
+  openModal(addCardModal);
+  focusCardFormInput();
 });
 
-// ! CARDS
-
-// Loop through initialCards array and create cards
-initialCards.forEach((cardData) => {
-  // Select the card template from HTML
-  const cardTemplate = document.querySelector("#card-template");
-  // Select the card list container where new cards will be appended
-  const cardListEl = document.querySelector("#card-list");
-  // Instantiate a new Card object
-  const card = new Card(cardData);
-
-  // Get the HTML representation of the card element
-  const cardElement = card.getCardElement();
-  // Append the card element to the card list
-  cardListEl.appendChild(cardElement);
-});
-
-// Add card
-initialCards.forEach((cardData) => {
-  addCard(cardData);
-});
+addCardForm.addEventListener("submit", handleAddCardSubmit);
 
 // ! FORM VALIDATOR
 
-const editFormValidator = new FormValidator(settings, profileEditForm);
-const addCardFormValidator = new FormValidator(settings, addCardForm);
+// This object stores validators
+const formValidators = {};
 
-editFormValidator.enableValidation();
-addCardFormValidator.enableValidation();
+const enableValidation = (settings) => {
+  const formList = Array.from(document.querySelectorAll(settings.formSelector));
+  formList.forEach((formElement) => {
+    const validator = new FormValidator(settings, formElement);
+    // Get form id from index.html
+    const formId = formElement.getAttribute("id");
+    formValidators[formId] = validator;
+    validator.enableValidation();
+  });
+};
+
+enableValidation(settings);
+
+// Now we can select the form to validate using its id from index.html
+formValidators["profile-edit-form"].resetValidation();
+formValidators["add-card-form"].resetValidation();

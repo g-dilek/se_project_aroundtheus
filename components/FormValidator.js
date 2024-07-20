@@ -16,16 +16,13 @@ export default class FormValidator {
     this._setEventListeners();
   }
 
+  // Sets up initial event listeners for form submission and input events
   _setEventListeners() {
     this._form.addEventListener("submit", (evt) => {
       evt.preventDefault();
-    });
-
-    this._inputEls.forEach((inputEl) => {
-      inputEl.addEventListener("input", () => {
-        this._checkInputValidity(inputEl);
-        this._toggleButtonState();
-      });
+      // Validate all inputs before allowing submission
+      this._inputEls.forEach((inputEl) => this._checkInputValidity(inputEl));
+      this._toggleButtonState();
     });
   }
 
@@ -73,6 +70,8 @@ export default class FormValidator {
     this._submitButton.classList.remove(this._inactiveButtonClass);
   }
 
+  // Event listeners are for real-time validation feedback
+  // Fulfills 'enableValidation' public method requirement
   enableValidation() {
     this._inputEls.forEach((inputEl) => {
       inputEl.addEventListener("input", () => {
@@ -80,12 +79,15 @@ export default class FormValidator {
         this._toggleButtonState();
       });
     });
+  }
 
-    this._form.addEventListener("submit", (evt) => {
-      evt.preventDefault();
-      // Validate all inputs before allowing submission
-      this._inputEls.forEach((inputEl) => this._checkInputValidity(inputEl));
-      this._toggleButtonState();
+  resetValidation() {
+    // Toggle submit button state
+    this._toggleButtonState();
+
+    // Clear input errors
+    this._inputEls.forEach((inputElement) => {
+      this._hideInputError(inputElement);
     });
   }
 }
