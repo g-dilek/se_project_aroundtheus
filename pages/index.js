@@ -1,3 +1,5 @@
+import Card, { addCard } from "../components/bingus.js";
+
 const initialCards = [
   {
     name: "Yosemite Valley",
@@ -36,22 +38,20 @@ const profileEditTitle = document.querySelector("#profile-edit-title");
 const profileEditSubtitle = document.querySelector("#profile-edit-subtitle");
 const profileEditForm = document.querySelector("#profile-edit-form");
 
-const cardTemplate =
-  document.querySelector("#card-template").content.firstElementChild;
-const cardListEl = document.querySelector("#card-list");
-const cardImageModal = document.querySelector("#card-image-modal");
-const cardImageCloseButton = document.querySelector("#card-image-close-button");
-const cardFullImage = document.querySelector("#card-full-image");
-const cardCaption = document.querySelector("#card-caption");
+// const cardTemplate =
+//   document.querySelector("#card-template").content.firstElementChild;
+// const cardListEl = document.querySelector("#card-list");
+// const cardImageModal = document.querySelector("#card-image-modal");
+// const cardImageCloseButton = document.querySelector("#card-image-close-button");
+// const cardFullImage = document.querySelector("#card-full-image");
+// const cardCaption = document.querySelector("#card-caption");
 
-const addCardButton = document.querySelector("#add-card-button");
-const addCardModal = document.querySelector("#add-card-modal");
-const addCardCloseButton = document.querySelector(
-  "#profile-add-card-close-button"
-);
-const editCardTitle = document.querySelector("#add-card-title");
-const editCardImage = document.querySelector("#add-card-image");
-const addCardForm = document.querySelector("#add-card-form");
+// const addCardButton = document.querySelector("#add-card-button");
+// const addCardModal = document.querySelector("#add-card-modal");
+// const addCardCloseButton = document.querySelector("#add-card-close-button");
+// const editCardTitle = document.querySelector("#add-card-title");
+// const editCardImage = document.querySelector("#add-card-image");
+// const addCardForm = document.querySelector("#add-card-form");
 
 const closeButtons = document.querySelectorAll(".modal__close-button");
 const overlays = document.querySelectorAll(".modal__overlay");
@@ -75,7 +75,7 @@ const keydownListener = (evt) => {
 
 // ! FUNCTIONS
 
-function openModal(modal) {
+export function openModal(modal) {
   modal.classList.add("modal_opened");
   modal.classList.add("modal__overlay_active");
   // escape key event listener activates when modal is opened
@@ -105,51 +105,6 @@ function fillProfileInputs() {
   profileEditTitle.select();
 }
 
-function focusCardFormInput() {
-  // Automatically puts focus on card title input when opened for easy editing
-  editCardTitle.focus();
-  editCardTitle.select();
-}
-
-function getCardElement(cardData) {
-  const cardElement = cardTemplate.cloneNode(true);
-  const cardImageEl = cardElement.querySelector("#card-image");
-  const cardTitleEl = cardElement.querySelector("#card-title");
-  const profileCardLikeButton = cardElement.querySelector("#card-like-button");
-
-  profileCardLikeButton.addEventListener("click", () => {
-    profileCardLikeButton.classList.toggle("cards__like-button-active");
-  });
-  const profileCardDeleteButton = cardElement.querySelector(
-    "#card-delete-button"
-  );
-  profileCardDeleteButton.addEventListener("click", () => {
-    cardElement.remove();
-  });
-  cardImageEl.addEventListener("click", () => {
-    openModal(cardImageModal);
-    cardFullImage.src = cardImageEl.src;
-    cardFullImage.alt = cardImageEl.alt;
-    cardCaption.textContent = cardData.name;
-  });
-  cardTitleEl.textContent = cardData.name;
-  cardImageEl.src = cardData.link;
-  cardImageEl.alt = cardTitleEl.textContent;
-
-  return cardElement;
-}
-
-function addCard() {
-  // Creates new card and adds to beginning of array
-  const newCardName = editCardTitle.value;
-  const newCardLink = editCardImage.value;
-  const newCard = { name: newCardName, link: newCardLink };
-  // Generate HTML for new card
-  const newCardElement = getCardElement(newCard);
-  // Append new card HTML to card list
-  cardListEl.prepend(newCardElement);
-}
-
 // ! EVENT HANDLERS
 
 // Prevents page from refreshing when 'save' is clicked
@@ -159,16 +114,6 @@ function handleProfileEditSubmit(evt) {
   profileTitle.textContent = profileEditTitle.value;
   profileSubtitle.textContent = profileEditSubtitle.value;
   closeModal(profileEditModal);
-}
-
-// When add card submitted: prevents refresh, closes add card modal,
-// adds new card, resets title and image values only after submit
-function handleAddCardSubmit(evt) {
-  evt.preventDefault();
-  closeModal(addCardModal);
-  addCard();
-  editCardTitle.value = "";
-  editCardImage.value = "";
 }
 
 // ! EVENT LISTENERS
@@ -188,10 +133,6 @@ profileEditButton.addEventListener("click", () => {
 });
 
 // When add card button clicked, open modal
-addCardButton.addEventListener("click", () => {
-  openModal(addCardModal);
-  focusCardFormInput();
-});
 
 // When a modal close button clicked, check closest modal and run closeModal() on it
 closeButtons.forEach((button) => {
@@ -205,10 +146,22 @@ closeButtons.forEach((button) => {
 // add text entered to profile modal
 profileEditForm.addEventListener("submit", handleProfileEditSubmit);
 
-// Same for add card modal
-addCardForm.addEventListener("submit", handleAddCardSubmit);
+// Loop through initialCards array and create cards
+initialCards.forEach((cardData) => {
+  // Select the card template from HTML
+  const cardTemplate = document.querySelector("#card-template");
+  // Select the card list container where new cards will be appended
+  const cardListEl = document.querySelector("#card-list");
+  // Instantiate a new Card object
+  const card = new Card(cardData);
+
+  // Get the HTML representation of the card element
+  const cardElement = card.getCardElement();
+
+  // Append the card element to the card list
+  cardListEl.appendChild(cardElement);
+});
 
 initialCards.forEach((cardData) => {
-  const cardElement = getCardElement(cardData);
-  cardListEl.append(cardElement);
+  addCard(cardData);
 });
