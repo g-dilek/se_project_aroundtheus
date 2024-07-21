@@ -39,29 +39,37 @@ const settings = {
 
 // ! ELEMENTS
 
+// Edit profile
 const profileEditButton = document.querySelector("#profile-edit-button");
-const profileEditModal = document.querySelector("#profile-edit-modal");
 const profileCloseButton = document.querySelector("#profile-close-button");
 const profileTitle = document.querySelector("#profile-title");
 const profileSubtitle = document.querySelector("#profile-subtitle");
 const profileEditTitle = document.querySelector("#profile-edit-title");
 const profileEditSubtitle = document.querySelector("#profile-edit-subtitle");
-const profileEditForm = document.forms["profile-edit-form"];
 
-const closeButtons = document.querySelectorAll(".modal__close-button");
-const overlays = document.querySelectorAll(".modal__overlay");
-const modals = document.querySelectorAll(".modal");
-
-const addCardForm = document.forms["add-card-form"];
-
+// Add new card
 const addCardButton = document.querySelector("#add-card-button");
-
 const editCardTitle = document.querySelector("#add-card-title");
 const editCardImage = document.querySelector("#add-card-image");
 const newCardName = editCardTitle.value;
 const newCardLink = editCardImage.value;
 const cardListEl = document.querySelector("#card-list");
+
+// Forms
+const profileEditForm = document.forms["profile-edit-form"];
+const addCardForm = document.forms["add-card-form"];
+
+// Modals
 const addCardModal = document.querySelector("#add-card-modal");
+const cardImageModal = document.querySelector("#card-image-modal");
+const profileEditModal = document.querySelector("#profile-edit-modal");
+const closeButtons = document.querySelectorAll(".modal__close-button");
+const overlays = document.querySelectorAll(".modal__overlay");
+const modals = document.querySelectorAll(".modal");
+
+// Card - Image preview
+const cardFullImage = document.querySelector("#card-full-image");
+const cardCaption = document.querySelector("#card-caption");
 
 const modalSelectors = {
   profileEdit: "#profile-edit-modal",
@@ -164,14 +172,9 @@ function handleAddCardSubmit(evt) {
 
 // Handle image click
 function handleCardImageClick(cardData) {
-  const cardImageModal = document.querySelector("#card-image-modal");
   openModal(cardImageModal);
-
-  const cardFullImage = document.querySelector("#card-full-image");
   cardFullImage.src = cardData.link;
   cardFullImage.alt = cardData.name;
-
-  const cardCaption = document.querySelector("#card-caption");
   cardCaption.textContent = cardData.name;
 }
 
@@ -189,7 +192,6 @@ modals.forEach((modal) => {
 profileEditButton.addEventListener("click", () => {
   openModal(profileEditModal);
   fillProfileInputs();
-  editFormValidator.resetValidation();
 });
 
 // When add card button clicked, open modal
@@ -232,5 +234,4 @@ const enableValidation = (settings) => {
 enableValidation(settings);
 
 // Now we can select the form to validate using its id from index.html
-formValidators["profile-edit-form"].resetValidation();
 formValidators["add-card-form"].resetValidation();

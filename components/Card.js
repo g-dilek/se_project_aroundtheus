@@ -12,7 +12,6 @@ export default class Card {
     this._deleteButton = this._cardElement.querySelector(
       ".cards__delete-button"
     );
-    this._cardImageEl = this._cardElement.querySelector(".cards__image");
 
     // Bind event listeners
     this._setEventListeners();
@@ -51,11 +50,11 @@ export default class Card {
   _getCardElement() {
     const cardElement =
       this._cardTemplate.content.firstElementChild.cloneNode(true);
-    const cardImageEl = cardElement.querySelector(".cards__image");
-    const cardTitleEl = cardElement.querySelector(".cards__title");
-    cardTitleEl.textContent = this._name;
-    cardImageEl.src = this._link;
-    cardImageEl.alt = this._name;
+    this._cardTitleEl = cardElement.querySelector(".cards__title");
+    this._cardImageEl = cardElement.querySelector(".cards__image");
+    this._cardTitleEl.textContent = this._name;
+    this._cardImageEl.src = this._link;
+    this._cardImageEl.alt = this._name;
     return cardElement;
   }
 
