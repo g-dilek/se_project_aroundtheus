@@ -1,0 +1,29 @@
+.page {
+  font-family: "Inter", Arial, Helvetica, sans-serif;
+  font-weight: 500;
+  /* Fix for Chrome per Inter font website */
+  font-feature-settings: "liga" 1, "calt" 1;
+  background-color: black;
+  color: white;
+  /* Prevents my browser from displaying project in dark mode */
+  color-scheme: initial;
+}
+
+.page__section {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.page__content {
+  padding-top: 3.55%;
+  padding-bottom: 4.7%;
+  max-width: 880px;
+  margin: auto;
+}
+
+@media screen and (max-width: 768px) {
+  .page__content {
+    padding: 0;
+  }
+}
