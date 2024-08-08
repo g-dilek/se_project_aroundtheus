@@ -40,8 +40,6 @@ export default class Popup {
 
     // handle close by overlay click
     const overlay = this._popupElement.querySelector(".modal__overlay");
-    overlay.addEventListener("click", () => {
-      this.close();
-    });
+    overlay.addEventListener("click", () => this.close());
   }
 }

@@ -8,65 +8,22 @@ import PopupWithImage from "../components/PopupWithImage.js";
 
 // other imports
 import "../pages/index.css";
-
-const initialCards = [
-  {
-    name: "Yosemite Valley",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/yosemite.jpg",
-  },
-  {
-    name: "Lake Louise",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/lake-louise.jpg",
-  },
-  {
-    name: "Bald Mountains",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/bald-mountains.jpg",
-  },
-  {
-    name: "Latemar",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/latemar.jpg",
-  },
-  {
-    name: "Vanoise National Park",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/vanoise.jpg",
-  },
-  {
-    name: "Lago di Braies",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/lago.jpg",
-  },
-];
-
-const settings = {
-  formSelector: ".modal__form",
-  inputSelector: ".modal__input",
-  submitButtonSelector: ".modal__save-button",
-  inactiveButtonClass: "modal__save-button_disabled",
-  inputErrorClass: "modal__input_type_error",
-  errorClass: "modal__error_visible",
-};
+import { initialCards, settings } from "../utils/constants.js";
 
 // ! ELEMENTS
 
 // Edit profile
+const profileEditModal = document.querySelector("#profile-edit-modal");
+const profileEditForm = profileEditModal.querySelector(".modal__form");
 const profileEditButton = document.querySelector("#profile-edit-button");
-const profileCloseButton = document.querySelector("#profile-close-button");
 const profileTitle = document.querySelector("#profile-title");
 const profileSubtitle = document.querySelector("#profile-subtitle");
-const profileEditTitle = document.querySelector("#profile-edit-title");
-const profileEditSubtitle = document.querySelector("#profile-edit-subtitle");
 
 // Add new card
+const addCardModal = document.querySelector("#add-card-modal");
+const addCardForm = addCardModal.querySelector(".modal__form");
 const addCardButton = document.querySelector("#add-card-button");
 const editCardTitle = document.querySelector("#add-card-title");
-const cardListEl = document.querySelector("#card-list");
-
-// // ! DISPLAY INITIAL CARDS
-
-// // Add initial cards
-// initialCards.forEach((cardData) => {
-//   const cardElement = createCard(cardData);
-//   cardListEl.appendChild(cardElement);
-// });
 
 // ! FUNCTIONS
 
@@ -97,7 +54,7 @@ function handleProfileEditSubmit(profileData) {
 }
 
 // Add card handler
-function handleAddCardSubmit(newCardData, cardListEl) {
+function handleAddCardSubmit(newCardData) {
   const name = newCardData.name;
   const alt = newCardData.name;
   const link = newCardData.link;
@@ -108,24 +65,10 @@ function handleAddCardSubmit(newCardData, cardListEl) {
 
 // ! FORM VALIDATOR
 
-// This object stores validators
-const formValidators = {};
-
-const enableValidation = (settings) => {
-  const formList = Array.from(document.querySelectorAll(settings.formSelector));
-  formList.forEach((formElement) => {
-    const validator = new FormValidator(settings, formElement);
-    // Get form id from index.html
-    const formId = formElement.getAttribute("id");
-    formValidators[formId] = validator;
-    validator.enableValidation();
-  });
-};
-
-enableValidation(settings);
-
-// Now we can select the form to validate using its id from index.html
-formValidators["add-card-form"].resetValidation();
+const addCardFormValidator = new FormValidator(settings, addCardForm);
+addCardFormValidator.enableValidation();
+const profileEditFormValidator = new FormValidator(settings, profileEditForm);
+profileEditFormValidator.enableValidation();
 
 // ! INSTANTIATE CLASSES
 

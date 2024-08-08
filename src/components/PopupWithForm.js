@@ -52,7 +52,3 @@ export default class PopupWithForm extends Popup {
     });
   }
 }
-
-// popupSelector is the id of our unique form
-// const newCardPopup = new PopupWithForm('#profile-edit-form', () => {});
-// newCardPopup.open() and newCardPopup.close()
