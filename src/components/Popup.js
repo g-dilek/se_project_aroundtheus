@@ -39,7 +39,13 @@ export default class Popup {
     });
 
     // handle close by overlay click
-    const overlay = this._popupElement.querySelector(".modal__overlay");
-    overlay.addEventListener("click", () => this.close());
+    //   const overlay = this._popupElement.querySelector(".modal__overlay");
+    //   overlay.addEventListener("click", () => this.close());
+    // }
+    this._popupElement.addEventListener("click", (evt) => {
+      if (evt.target.classList.contains("modal")) {
+        this.close();
+      }
+    });
   }
 }
