@@ -9,8 +9,7 @@
     <meta name="keywords" content="Jacques Cousteau, explorer, United States" />
     <meta name="author" content="Grace Persion" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="favicon.ico" />
-    <link href="./pages/index.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="./src/images/favicon.ico" />
 
     <title>Around The U.S.</title>
   </head>
@@ -19,7 +18,7 @@
       <header class="header page__section">
         <img
           class="header__logo"
-          src="./images/Vector_Logo.svg"
+          src="<%=require('./images/Vector_Logo.svg')%>"
           alt="Around the U.S. Logo"
         />
       </header>
@@ -28,8 +27,8 @@
           <div class="profile__container">
             <img
               class="profile__image"
-              src="./images/Avatar_Jacques.svg"
               alt="Avatar"
+              src="<%=require('./images/Avatar_Jacques.svg')%>"
             />
             <div class="profile__info">
               <div class="profile__header">
@@ -61,6 +60,7 @@
       </footer>
 
       <!-- Profile edit modal -->
+
       <div class="modal" id="profile-edit-modal">
         <div class="modal__container">
           <button
@@ -69,40 +69,55 @@
             id="profile-close-button"
           ></button>
           <p class="modal__heading">Edit Profile</p>
-          <form class="modal__form" id="profile-edit-form" novalidate>
-            <input
-              type="text"
-              name="title"
-              class="modal__input"
-              placeholder="Name"
-              id="profile-edit-title"
-              required
-              minlength="2"
-              maxlength="40"
-            />
-            <span class="modal__error">Place error message here</span>
-            <input
-              type="text"
-              name="subtitle"
-              class="modal__input"
-              placeholder="Description"
-              id="profile-edit-subtitle"
-              required
-              minlength="2"
-              maxlength="200"
-            />
+          <form
+            class="modal__form"
+            id="profile-edit-form"
+            name="profile-form"
+            novalidate
+          >
+            <label class="modal__input_container">
+              <input
+                type="text"
+                name="title"
+                class="modal__input"
+                placeholder="Name"
+                id="profile-edit-title"
+                required
+                minlength="2"
+                maxlength="40" />
+              <span class="modal__error" id="profile-edit-title-error"></span
+            ></label>
+            <label class="modal__input_container">
+              <input
+                type="text"
+                name="subtitle"
+                class="modal__input"
+                placeholder="Description"
+                id="profile-edit-subtitle"
+                required
+                minlength="2"
+                maxlength="200"
+              />
+              <span
+                class="modal__error"
+                id="profile-edit-subtitle-error"
+              ></span>
+            </label>
             <button
               type="submit"
-              class="modal__save-button"
+              class="modal__save-button modal__save-button_disabled"
               id="profile-save-button"
+              disabled
             >
               Save
             </button>
           </form>
         </div>
+        <div class="modal__overlay" id="profile-edit-overlay"></div>
       </div>
 
-      <!-- Image add modal -->
+      <!-- Add new card modal -->
+
       <div class="modal" id="add-card-modal">
         <div class="modal__container">
           <button
@@ -111,36 +126,48 @@
             id="profile-add-card-close-button"
           ></button>
           <p class="modal__heading">New Place</p>
-          <form class="modal__form" id="profile-add-card-form" novalidate>
-            <input
-              type="text"
-              name="title"
-              class="modal__input"
-              placeholder="Title"
-              id="profile-add-card-title"
-              required
-              minlength="1"
-              maxlength="30"
-            />
-            <input
-              type="text"
-              name="image"
-              class="modal__input"
-              placeholder="Image Link"
-              id="profile-add-card-image"
-              required
-            />
+          <form
+            class="modal__form"
+            id="add-card-form"
+            name="card-form"
+            novalidate
+          >
+            <label class="modal__input_container">
+              <input
+                type="text"
+                name="title"
+                class="modal__input"
+                placeholder="Title"
+                id="add-card-title"
+                required
+                minlength="1"
+                maxlength="30" />
+              <span class="modal__error" id="add-card-title-error"></span
+            ></label>
+            <label class="modal__input_container">
+              <input
+                type="url"
+                name="image"
+                class="modal__input"
+                placeholder="Image Link"
+                id="add-card-image"
+                required />
+              <span class="modal__error" id="add-card-image-error"></span
+            ></label>
             <button
               type="submit"
-              class="modal__save-button"
-              id="profile-add-card-create-button"
+              class="modal__save-button modal__save-button_disabled"
+              id="add-card-create-button"
+              disabled
             >
               Create
             </button>
           </form>
         </div>
+        <div class="modal__overlay" id="add-card-overlay"></div>
       </div>
-      <!-- Card image modal -->
+
+      <!-- Enlarged card image modal -->
       <div class="modal" id="card-image-modal">
         <div class="modal__container-preview">
           <button
@@ -151,6 +178,7 @@
           <img src="" class="modal__card-image" alt="" id="card-full-image" />
           <p class="modal__caption" id="card-caption"></p>
         </div>
+        <div class="modal__overlay" id="card-image-overlay"></div>
       </div>
     </div>
     <!-- Page content -->
@@ -173,7 +201,5 @@
           ></button>
         </div></li
     ></template>
-    <script src="./scripts/index.js"></script>
-    <script src="./scripts/validate.js"></script>
   </body>
 </html>
