@@ -5,10 +5,23 @@ import Section from "../components/Section.js";
 import UserInfo from "../components/UserInfo.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import PopupWithImage from "../components/PopupWithImage.js";
+import Popup from "../components/Popup.js";
 
 // other imports
 import "../pages/index.css";
 import { initialCards, settings } from "../utils/constants.js";
+
+// ! API
+
+fetch("https://around-api.en.tripleten-services.com/v1/cards", {
+  headers: {
+    authorization: "590f97d9-e5fa-4775-8c94-b9976acf5893",
+  },
+})
+  .then((res) => res.json())
+  .then((result) => {
+    console.log(result);
+  });
 
 // ! ELEMENTS
 
@@ -21,6 +34,14 @@ const profileSubtitle = document.querySelector("#profile-subtitle");
 // Add new card
 const addCardButton = document.querySelector("#add-card-button");
 const cardListEl = document.querySelector(".cards__list");
+
+// New profile Image
+const profileImageButton = document.querySelector(".profile__image");
+const profileImage = document.querySelector(".profile__image");
+
+// Confirm card delete
+const deleteIcon = document.querySelectorAll("#card-delete-button");
+let cardToDelete = null;
 
 // store form data to allow for saving of data
 // despite opening and closing modal. only cleared
@@ -38,13 +59,14 @@ function updateCardFormData(data) {
   cardFormData = { ...data };
 }
 
-function handleCardImageClick(name, link) {
-  imagePreviewPopup.open(name, link);
-}
-
 // Function to create a new card element
 function createCard(cardData) {
-  const card = new Card(cardData, "#card-template", handleCardImageClick);
+  const card = new Card(
+    cardData,
+    "#card-template",
+    handleCardImageClick,
+    handleDeleteClick
+  );
   return card.getCardElement();
 }
 
@@ -70,6 +92,7 @@ enableValidation(settings);
 
 formValidators["profile-form"].resetValidation();
 formValidators["card-form"].resetValidation();
+// formValidators["profile-image-form"].resetValidation();
 
 // ! EVENT HANDLERS
 
@@ -92,7 +115,45 @@ function handleAddCardSubmit(newCardData) {
   formValidators["card-form"].disableButton();
 }
 
+// New profile image handler
+function handleProfileImageSubmit(newImageData) {
+  const newImageUrl = newImageData.image;
+  profileImage.src = newImageUrl;
+  profileImagePopup.close();
+}
+
+// Confirm card deletion handler
+function handleDeleteClick(card) {
+  cardToDelete = card;
+  confirmDeletePopup.open();
+}
+
+function handleConfirmDelete() {
+  if (cardToDelete) {
+    cardToDelete.deleteCard();
+    cardToDelete = null;
+    confirmDeletePopup.close();
+  }
+}
+
+// Full card image handler
+function handleCardImageClick(name, link) {
+  imagePreviewPopup.open(name, link);
+}
+
 // ! INSTANTIATE CLASSES
+
+// Confirm card delete form
+const confirmDeletePopup = new Popup(
+  "#confirm-delete-modal",
+  handleConfirmDelete
+);
+
+// New profile image form
+const profileImagePopup = new PopupWithForm(
+  "#profile-image-modal",
+  handleProfileImageSubmit
+);
 
 // Edit profile form
 const profileEditPopup = new PopupWithForm(
@@ -134,6 +195,7 @@ const user = new UserInfo({
 profileEditPopup.setEventListeners();
 addCardPopup.setEventListeners();
 imagePreviewPopup.setEventListeners();
+profileImagePopup.setEventListeners();
 
 // ! EVENT LISTENERS FOR BUTTONS
 
@@ -149,3 +211,9 @@ profileEditButton.addEventListener("click", () => {
 addCardButton.addEventListener("click", () => {
   addCardPopup.open(cardFormData);
 });
+
+profileImageButton.addEventListener("click", () => {
+  profileImagePopup.open();
+});
+
+// deleteIcon.addEventListener("click", confirmDeletePopup.open());

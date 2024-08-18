@@ -1,19 +1,38 @@
 class Api {
   constructor(options) {
-    // constructor body
+    this._authorization = "590f97d9-e5fa-4775-8c94-b9976acf5893";
   }
 
   getInitialCards() {
-    // ...
+    return fetch("https://around-api.en.tripleten-services.com/v1", {
+      headers: {
+        authorization: this._authorization,
+      },
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        // if the server returns an error, reject the promise
+        return Promise.reject(`Error: ${res.status}`);
+      })
+      .catch((err) => console.error(err));
   }
 
   // other methods for working with the API
+
+  // Сreate a function in Api.js and return the Promise.all() method.
+  renderCards() {
+    // Pass the array of function calls for getting user information and
+    // the list of cards to Promise.all() as a parameter.
+    return Promise.all();
+  }
 }
 
 const api = new Api({
   baseUrl: "https://around-api.en.tripleten-services.com/v1",
   headers: {
-    authorization: "c56e30dc-2883-4270-a59e-b2f7bae969c6",
+    authorization: this._authorization,
     "Content-Type": "application/json",
   },
 });

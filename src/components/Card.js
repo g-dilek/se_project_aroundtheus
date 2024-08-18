@@ -1,9 +1,10 @@
 export default class Card {
-  constructor(data, cardSelector, handleImageClick) {
+  constructor(data, cardSelector, handleImageClick, handleDeleteClick) {
     this._name = data.name;
     this._link = data.link;
     this._cardSelector = cardSelector;
     this._handleImageClick = handleImageClick;
+    this._handleDeleteClick = handleDeleteClick;
 
     // Fetch DOM elements and store them as class fields
     this._cardTemplate = document.querySelector(this._cardSelector);
@@ -26,7 +27,8 @@ export default class Card {
 
     // Delete button event listener
     this._deleteButton.addEventListener("click", () => {
-      this._handleDeleteButton();
+      // open are you sure popup here
+      this._handleDeleteClick(this);
     });
 
     // Card image click event listener
@@ -41,7 +43,7 @@ export default class Card {
   }
 
   // Delete button handler
-  _handleDeleteButton() {
+  deleteCard() {
     this._cardElement.remove();
     this._cardElement = null;
   }

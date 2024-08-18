@@ -26,6 +26,7 @@
         <section class="profile page__section">
           <div class="profile__container">
             <img
+              name="image"
               class="profile__image"
               alt="Avatar"
               src="<%=require('./images/Avatar_Jacques.svg')%>"
@@ -114,6 +115,66 @@
           </form>
         </div>
         <div class="modal__overlay" id="profile-edit-overlay"></div>
+      </div>
+
+      <!-- Confirm delete modal -->
+
+      <div class="modal" id="confirm-delete-modal">
+        <div class="modal__container">
+          <button
+            type="button"
+            class="modal__close-button"
+            id="confirm-delete-close-button"
+          ></button>
+          <p class="modal__heading">Are you sure?</p>
+          <button
+            type="submit"
+            class="modal__save-button"
+            id="confirm-delete-yes-button"
+          >
+            Yes
+          </button>
+        </div>
+        <div class="modal__overlay" id="confirm-delete-overlay"></div>
+      </div>
+
+      <!-- Change profile image modal -->
+
+      <div class="modal" id="profile-image-modal">
+        <div class="modal__container">
+          <button
+            type="button"
+            class="modal__close-button"
+            id="profile-image-close-button"
+          ></button>
+          <p class="modal__heading">Change Profile Picture</p>
+          <form
+            class="modal__form"
+            id="profile-image-form"
+            name="profile-image-form"
+            novalidate
+          >
+            <label class="modal__input_container">
+              <input
+                type="url"
+                name="image"
+                class="modal__input"
+                placeholder="Image Link"
+                id="profile-image-input"
+                required />
+              <span class="modal__error" id="profile-image-input-error"></span
+            ></label>
+            <button
+              type="submit"
+              class="modal__save-button modal__save-button_disabled"
+              id="profile-image-save-button"
+              disabled
+            >
+              Save
+            </button>
+          </form>
+        </div>
+        <div class="modal__overlay" id="add-card-overlay"></div>
       </div>
 
       <!-- Add new card modal -->

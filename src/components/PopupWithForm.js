@@ -20,7 +20,8 @@ export default class PopupWithForm extends Popup {
   }
 
   // have profile edit form initially display profile title and subtitle
-  setInputValues(data) {
+  setInputValues(data = {}) {
+    // const inputs = this._inputs;
     this._inputs.forEach((input) => {
       // put in the existing info or nothing
       input.value = data[input.name] || "";
