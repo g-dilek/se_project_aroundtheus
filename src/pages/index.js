@@ -6,6 +6,7 @@ import UserInfo from "../components/UserInfo.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import Popup from "../components/Popup.js";
+import Api from "../components/Api.js";
 
 // other imports
 import "../pages/index.css";
@@ -13,15 +14,15 @@ import { initialCards, settings } from "../utils/constants.js";
 
 // ! API
 
-fetch("https://around-api.en.tripleten-services.com/v1/cards", {
+const api = new Api({
+  baseUrl: "https://around-api.en.tripleten-services.com/v1",
   headers: {
-    authorization: "590f97d9-e5fa-4775-8c94-b9976acf5893",
+    authorization: process.env.API_KEY,
+    "Content-Type": "application/json",
   },
-})
-  .then((res) => res.json())
-  .then((result) => {
-    console.log(result);
-  });
+});
+
+api.getInitialCards();
 
 // ! ELEMENTS
 
@@ -171,18 +172,6 @@ const addCardPopup = new PopupWithForm(
 
 // Full image popup
 const imagePreviewPopup = new PopupWithImage("#card-image-modal");
-
-//Section
-const section = new Section(
-  {
-    items: initialCards,
-    renderer: (item) => {
-      section.addItem(createCard(item));
-    },
-  },
-  "#card-list"
-);
-section.renderItems();
 
 // User Info
 const user = new UserInfo({

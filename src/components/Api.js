@@ -1,20 +1,21 @@
 class Api {
-  constructor(options) {
-    this._authorization = "590f97d9-e5fa-4775-8c94-b9976acf5893";
-  }
+  constructor(options) {}
 
   getInitialCards() {
-    return fetch("https://around-api.en.tripleten-services.com/v1", {
+    return fetch("https://around-api.en.tripleten-services.com/v1/cards", {
       headers: {
-        authorization: this._authorization,
+        authorization: process.env.API_KEY,
       },
     })
       .then((res) => {
         if (res.ok) {
           return res.json();
         }
-        // if the server returns an error, reject the promise
+        // ELSE if the server returns an error, reject the promise
         return Promise.reject(`Error: ${res.status}`);
+      })
+      .then((result) => {
+        this.renderCards(result);
       })
       .catch((err) => console.error(err));
   }
@@ -25,21 +26,20 @@ class Api {
   renderCards() {
     // Pass the array of function calls for getting user information and
     // the list of cards to Promise.all() as a parameter.
-    return Promise.all();
+
+    const section = new Section(
+      {
+        items: cards,
+        renderer: (cardData) => {
+          const card = createCard(cardData);
+          section.addItem(card);
+        },
+      },
+      "#card-list"
+    );
+    section.renderItems();
   }
 }
-
-const api = new Api({
-  baseUrl: "https://around-api.en.tripleten-services.com/v1",
-  headers: {
-    authorization: this._authorization,
-    "Content-Type": "application/json",
-  },
-});
-
-// 123 test abc
-
-// User routes
 
 //     GET /users/me – Get the current user’s info
 //     PATCH /users/me – Update your profile information
