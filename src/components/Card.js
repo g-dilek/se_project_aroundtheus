@@ -2,6 +2,8 @@ export default class Card {
   constructor(data, cardSelector, handleImageClick, handleDeleteClick) {
     this._name = data.name;
     this._link = data.link;
+    // API ID of card
+    this._id = data._id;
     this._cardSelector = cardSelector;
     this._handleImageClick = handleImageClick;
     this._handleDeleteClick = handleDeleteClick;
@@ -27,7 +29,7 @@ export default class Card {
 
     // Delete button event listener
     this._deleteButton.addEventListener("click", () => {
-      // open are you sure popup here
+      // Open 'are you sure' popup here
       this._handleDeleteClick(this);
     });
 
@@ -37,8 +39,18 @@ export default class Card {
     });
   }
 
-  // Like button handler
+  // Liking and disliking button handler
   _handleLikeButton() {
+    const cardId = this.getId();
+    if (this._likeButton.classList.contains("cards__like-button-active")) {
+      api
+        .dislikeCard(cardId)
+        .catch((err) => console.error("Error unliking card:", err));
+    } else {
+      api
+        .likeCard(cardId)
+        .catch((err) => console.error("Error liking card:", err));
+    }
     this._likeButton.classList.toggle("cards__like-button-active");
   }
 
@@ -63,5 +75,10 @@ export default class Card {
   // Public method to get the card element
   getCardElement() {
     return this._cardElement;
+  }
+
+  // From API
+  getId() {
+    return this._id;
   }
 }

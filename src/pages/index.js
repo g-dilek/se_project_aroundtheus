@@ -17,12 +17,32 @@ import { initialCards, settings } from "../utils/constants.js";
 const api = new Api({
   baseUrl: "https://around-api.en.tripleten-services.com/v1",
   headers: {
-    authorization: process.env.API_KEY,
+    authorization: "d61b98fc-c3a9-4c62-af93-44f6069de42c",
     "Content-Type": "application/json",
   },
 });
 
-api.getInitialCards();
+const section = new Section(
+  {
+    // to populate with API data
+    items: [],
+    renderer: (cardData) => {
+      const card = createCard(cardData);
+      section.addItem(card);
+    },
+  },
+  "#card-list"
+);
+
+// Fetch and render initial cards
+api
+  .getInitialCards()
+  .then((cards) => {
+    console.log("Fetched cards:", cards);
+    section.setItems(cards);
+    section.renderItems();
+  })
+  .catch((err) => console.error("Error fetching initial cards:", err));
 
 // ! ELEMENTS
 
@@ -108,12 +128,15 @@ function handleProfileEditSubmit(profileData) {
 
 // Add card handler
 function handleAddCardSubmit(newCardData) {
-  const name = newCardData.title;
-  const alt = newCardData.title;
-  const link = newCardData.image;
-  section.addItem(createCard({ name, alt, link }));
-  addCardPopup.close();
-  formValidators["card-form"].disableButton();
+  api
+    .createCard(newCardData)
+    .then((cardData) => {
+      const card = createCard(cardData);
+      section.addItem(card);
+      addCardPopup.close();
+      formValidators["card-form"].disableButton();
+    })
+    .catch((err) => console.error("Error creating card:", err));
 }
 
 // New profile image handler
@@ -131,9 +154,14 @@ function handleDeleteClick(card) {
 
 function handleConfirmDelete() {
   if (cardToDelete) {
-    cardToDelete.deleteCard();
-    cardToDelete = null;
-    confirmDeletePopup.close();
+    api
+      .deleteCard(cardToDelete.getId())
+      .then(() => {
+        cardToDelete.deleteCard();
+        cardToDelete = null;
+        confirmDeletePopup.close();
+      })
+      .catch((err) => console.error("Error deleting card:", err));
   }
 }
 

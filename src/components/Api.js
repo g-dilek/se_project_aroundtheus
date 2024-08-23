@@ -1,43 +1,106 @@
-class Api {
-  constructor(options) {}
+export default class Api {
+  constructor(options) {
+    this._authorization = "d61b98fc-c3a9-4c62-af93-44f6069de42c";
+    this._baseUrl = options.baseUrl;
+    console.log("Base URL:", this._baseUrl);
+    console.log("Fetching URL:", `${this._baseUrl}/cards`);
+    console.log("Authorization Header:", this._authorization);
+  }
 
   getInitialCards() {
-    return fetch("https://around-api.en.tripleten-services.com/v1/cards", {
+    return fetch(`${this._baseUrl}/cards`, {
       headers: {
-        authorization: process.env.API_KEY,
+        authorization: this._authorization,
       },
     })
       .then((res) => {
         if (res.ok) {
           return res.json();
         }
-        // ELSE if the server returns an error, reject the promise
         return Promise.reject(`Error: ${res.status}`);
       })
-      .then((result) => {
-        this.renderCards(result);
+      .then((data) => {
+        console.log("API response data:", data);
+        return data;
       })
       .catch((err) => console.error(err));
   }
 
-  // other methods for working with the API
-
-  // Сreate a function in Api.js and return the Promise.all() method.
-  renderCards() {
-    // Pass the array of function calls for getting user information and
-    // the list of cards to Promise.all() as a parameter.
-
-    const section = new Section(
-      {
-        items: cards,
-        renderer: (cardData) => {
-          const card = createCard(cardData);
-          section.addItem(card);
-        },
+  addCard(cardData) {
+    return fetch(`${this._baseUrl}/cards`, {
+      method: "POST",
+      headers: {
+        authorization: this._authorization,
+        "Content-Type": "application/json",
       },
-      "#card-list"
-    );
-    section.renderItems();
+      body: JSON.stringify(cardData),
+    })
+      .then((res) =>
+        res.ok ? res.json() : Promise.reject(`Error: ${res.status}`)
+      )
+      .catch((err) => console.error(err));
+  }
+
+  // Create a new card
+  createCard({ name, link }) {
+    return fetch(`${this._baseUrl}/cards`, {
+      method: "POST",
+      headers: {
+        authorization: this._authorization,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ name, link }),
+    })
+      .then((res) => {
+        if (res.ok) return res.json();
+        return Promise.reject(`Error: ${res.status}`);
+      })
+      .catch((err) => console.error(err));
+  }
+
+  // Delete a card
+  deleteCard(cardId) {
+    return fetch(`${this._baseUrl}/cards/${cardId}`, {
+      method: "DELETE",
+      headers: {
+        authorization: this._authorization,
+      },
+    })
+      .then((res) => {
+        if (res.ok) return;
+        return Promise.reject(`Error: ${res.status}`);
+      })
+      .catch((err) => console.error(err));
+  }
+
+  // Like a card
+  likeCard(cardId) {
+    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
+      method: "PUT",
+      headers: {
+        authorization: this._authorization,
+      },
+    })
+      .then((res) => {
+        if (res.ok) return res.json();
+        return Promise.reject(`Error: ${res.status}`);
+      })
+      .catch((err) => console.error(err));
+  }
+
+  // Dislike a card
+  dislikeCard(cardId) {
+    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
+      method: "DELETE",
+      headers: {
+        authorization: this._authorization,
+      },
+    })
+      .then((res) => {
+        if (res.ok) return res.json();
+        return Promise.reject(`Error: ${res.status}`);
+      })
+      .catch((err) => console.error(err));
   }
 }
 
