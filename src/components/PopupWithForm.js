@@ -23,7 +23,6 @@ export default class PopupWithForm extends Popup {
 
   // have profile edit form initially display profile title and subtitle
   setInputValues(data = {}) {
-    // const inputs = this._inputs;
     this._inputs.forEach((input) => {
       // put in the existing info or nothing
       input.value = data[input.name] || "";
@@ -71,8 +70,10 @@ export default class PopupWithForm extends Popup {
   renderLoading(isLoading, loadingText = "Saving...") {
     if (isLoading) {
       this._submitButton.textContent = loadingText;
+      this._submitButton.disabled = true;
     } else {
       this._submitButton.textContent = this._submitButtonText;
+      this._submitButton.disabled = false;
     }
   }
 }

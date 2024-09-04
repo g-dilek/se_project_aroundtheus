@@ -177,6 +177,7 @@ formValidators["card-form"].resetValidation();
 
 // Profile edit handler
 function handleProfileEditSubmit(profileData) {
+  profileEditPopup.renderLoading(true);
   api
     .updateProfileInfo({
       name: profileData.title,
@@ -184,49 +185,37 @@ function handleProfileEditSubmit(profileData) {
     })
     .then((updatedData) => {
       user.setUserInfo(updatedData);
+      profileEditPopup.close();
     })
-    .catch((err) => console.error(`Failed to update profile: ${err}`));
+    .catch((err) => console.error(`Failed to update profile: ${err}`))
+    .finally(() => {
+      profileEditPopup.renderLoading(false);
+    });
 }
 
 // Add card handler
 function handleAddCardSubmit(inputValues) {
-  console.log("Form input values:", inputValues);
-
-  const { title, image } = inputValues;
-
-  // Validate input values
-  if (!title || !image) {
-    console.error("Invalid card data:", inputValues);
-    return;
-  }
-
   addCardPopup.renderLoading(true);
-
   api
-    .addCard({ name: title, link: image }) // Ensure these field names match the API's expectations
+    .addCard({ name: inputValues.title, link: inputValues.image })
     .then((newCardData) => {
-      // Create a new card instance and add it to the section
       const newCard = createCard(newCardData);
       cardSection.addItem(newCard.getCardElement());
-      addCardForm.reset();
       addCardPopup.close();
       formValidators["card-form"].resetValidation();
     })
-    .catch((err) => {
-      console.error("Error adding card:", err);
-    })
+    .catch((err) => console.error("Error adding card:", err))
     .finally(() => {
       addCardPopup.renderLoading(false);
     });
 }
-
 // New profile image handler
 function handleProfileImageSubmit(newImageData) {
   profileImagePopup.renderLoading(true);
   api
     .updateProfileAvatar({ avatar: newImageData.image })
     .then((res) => {
-      user.setUserAvatar({ avatar: res.avatar }); // Ensure the response contains the correct `avatar` field
+      user.setUserAvatar({ avatar: res.avatar });
       profileImagePopup.close();
     })
     .catch(console.error)
@@ -253,16 +242,20 @@ function handleLikeCard(card) {
 }
 
 function handleConfirmDelete() {
-  if (cardToDelete) {
-    api
-      .deleteCard(cardToDelete.getId())
-      .then(() => {
-        cardToDelete.handleDeleteCard(); // This method should exist on the cardToDelete object
-        cardToDelete = null; // Clear cardToDelete
-        deleteCardPopup.close();
-      })
-      .catch((err) => console.error("Error deleting card:", err));
-  }
+  deleteCardPopup.renderLoading(true);
+  api
+    .deleteCard(cardToDelete.getId())
+    .then(() => {
+      cardToDelete.handleDeleteCard();
+      cardToDelete = null;
+      deleteCardPopup.close();
+    })
+    .catch((err) => {
+      console.error("Error deleting card:", err);
+    })
+    .finally(() => {
+      deleteCardPopup.renderLoading(false);
+    });
 }
 
 // Full card image handler
