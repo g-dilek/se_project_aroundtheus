@@ -2,8 +2,6 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin"); // connect plugin
 const { CleanWebpackPlugin } = require("clean-webpack-plugin"); // connect plugin
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const Dotenv = require("dotenv-webpack");
-require("dotenv").config();
 
 module.exports = {
   devtool: "inline-source-map",
@@ -64,6 +62,5 @@ module.exports = {
     }),
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin(),
-    new Dotenv({ path: "./env", safe: true }),
   ],
 };

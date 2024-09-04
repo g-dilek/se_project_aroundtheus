@@ -31,6 +31,7 @@
               alt="Avatar"
               src="<%=require('./images/Avatar_Jacques.svg')%>"
             />
+            <div class="profile__avatar-edit-button" type="button"></div>
             <div class="profile__info">
               <div class="profile__header">
                 <h1 class="profile__title" id="profile-title">
@@ -127,13 +128,15 @@
             id="confirm-delete-close-button"
           ></button>
           <p class="modal__heading">Are you sure?</p>
-          <button
-            type="submit"
-            class="modal__save-button"
-            id="confirm-delete-yes-button"
-          >
-            Yes
-          </button>
+          <form class="modal__form" id="delete-card-form">
+            <button
+              type="submit"
+              class="modal__save-button"
+              id="confirm-delete-yes-button"
+            >
+              Yes
+            </button>
+          </form>
         </div>
         <div class="modal__overlay" id="confirm-delete-overlay"></div>
       </div>
