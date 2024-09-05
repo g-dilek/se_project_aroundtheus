@@ -3,9 +3,6 @@ export default class UserInfo {
     this._title = document.querySelector(title);
     this._subtitle = document.querySelector(subtitle);
     this._avatar = document.querySelector(avatar);
-    console.log("Avatar image element:", this._avatar);
-    console.log("Title element:", this._title);
-    console.log("Subtitle element:", this._subtitle);
   }
 
   getUserInfo() {

@@ -78,7 +78,6 @@ export default class Api {
     })
       .then(this._handleResponse)
       .then((res) => {
-        console.log("Avatar updated:", res);
         return res;
       });
   }

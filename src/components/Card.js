@@ -26,7 +26,7 @@ export default class Card {
 
   _setEventListeners() {
     this._likeButton.addEventListener("click", () => {
-      this._handleLikeClick();
+      this._handleLikeClick(this);
     });
 
     this._deleteButton.addEventListener("click", () => {
@@ -64,5 +64,13 @@ export default class Card {
   handleDeleteCard() {
     this._cardElement.remove();
     this._cardElement = null;
+  }
+
+  getIsLikedState() {
+    return this._likeButton.classList.contains("cards__like-button_active");
+  }
+
+  flipLikeState() {
+    this._likeButton.classList.toggle("cards__like-button_active");
   }
 }

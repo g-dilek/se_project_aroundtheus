@@ -76,6 +76,15 @@ const addCardPopup = new PopupWithForm(
 // Full image popup
 const imagePreviewPopup = new PopupWithImage("#card-image-modal");
 
+// API
+const api = new Api({
+  baseUrl: "https://around-api.en.tripleten-services.com/v1",
+  headers: {
+    authorization: "298fcaaa-e173-4e81-9326-ea95e21a4625",
+    "Content-Type": "application/json",
+  },
+});
+
 // User Info
 const user = new UserInfo({
   title: ".profile__title",
@@ -86,29 +95,20 @@ const user = new UserInfo({
 // Creates card section
 const cardSection = new Section(
   {
-    items: [], // Start with an empty array
+    items: [],
     renderer: (item) => {
       const card = createCard(item);
-      cardSection.addItem(card.getCardElement()); // Add each item to the section
+      cardSection.addItem(card.getCardElement());
     },
   },
-  "#card-list" // The selector for your card container
+  "#card-list"
 );
-
-// API
-const api = new Api({
-  baseUrl: "https://around-api.en.tripleten-services.com/v1",
-  headers: {
-    authorization: "298fcaaa-e173-4e81-9326-ea95e21a4625",
-    "Content-Type": "application/json",
-  },
-});
 
 // Fetches initial cards from server
 api
   .getInitialCards()
   .then((cards) => {
-    cardSection.setItems(cards); // Populate the section with fetched cards
+    cardSection.setItems(cards);
   })
   .catch((err) => console.error("Error fetching initial cards:", err));
 
@@ -121,7 +121,7 @@ api
       about: userInfo.about,
     });
     user.setUserAvatar({
-      avatar: userInfo.avatar, // Ensure this is the correct URL
+      avatar: userInfo.avatar,
     });
   })
   .catch((err) => console.error("Error fetching user info:", err));
@@ -140,9 +140,9 @@ function createCard(cardData) {
     {
       title: cardData.name,
       image: cardData.link,
-      _id: cardData._id, // Ensure you pass the ID for delete/like operations
+      _id: cardData._id,
     },
-    "#card-template", // Assuming your template selector is '#card-template'
+    "#card-template",
     handleCardImageClick,
     handleDeleteCard,
     handleLikeCard
@@ -171,7 +171,6 @@ enableValidation(settings);
 
 formValidators["profile-form"].resetValidation();
 formValidators["card-form"].resetValidation();
-// formValidators["profile-image-form"].resetValidation();
 
 // ! FUNCTIONS / EVENT HANDLERS
 
@@ -226,20 +225,22 @@ function handleProfileImageSubmit(newImageData) {
 
 // Confirm card deletion handler
 function handleDeleteCard(card) {
-  cardToDelete = card; // Set the card to be deleted
-  deleteCardPopup.open(); // Open the popup
+  cardToDelete = card;
+  deleteCardPopup.open();
 }
 
 // Like button handler
-function handleLikeCard(card) {
-  const action = card.getIsLikedState() ? api.unlikeCard : api.likeCard;
-  action(card.getId())
-    .then((updatedCardData) => {
+const handleLikeCard = (card) => {
+  const cardId = card.getId();
+  api
+    .likeCard(cardId)
+    .then(() => {
       card.flipLikeState();
-      card.updateLikes(updatedCardData.likes);
     })
-    .catch(console.error);
-}
+    .catch((err) => {
+      console.error(`Error: ${err}`);
+    });
+};
 
 function handleConfirmDelete() {
   deleteCardPopup.renderLoading(true);
@@ -291,5 +292,3 @@ addCardButton.addEventListener("click", () => {
 profileImageButton.addEventListener("click", () => {
   profileImagePopup.open();
 });
-
-// deleteIcon.addEventListener("click", confirmDeletePopup.open());

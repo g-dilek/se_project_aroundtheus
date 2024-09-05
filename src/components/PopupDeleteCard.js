@@ -16,16 +16,16 @@ export default class PopupDeleteCard extends Popup {
 
   _handleConfirmDelete = () => {
     if (typeof this._handleDeleteConfirm === "function") {
-      this._handleDeleteConfirm(); // Call the deletion callback
+      this._handleDeleteConfirm();
     }
   };
 
   setEventListeners() {
-    super.setEventListeners(); // Call parent class method
+    super.setEventListeners();
     this._submitButton.addEventListener("click", (evt) => {
-      evt.preventDefault(); // Prevent default form submission behavior
+      evt.preventDefault();
       this._handleConfirmDelete();
-      this.close(); // Close the popup after confirmation
+      this.close();
     });
   }
 
