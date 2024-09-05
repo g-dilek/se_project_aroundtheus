@@ -172,7 +172,7 @@ enableValidation(settings);
 formValidators["profile-form"].resetValidation();
 formValidators["card-form"].resetValidation();
 
-// ! FUNCTIONS / EVENT HANDLERS
+// ! EVENT HANDLERS
 
 // Profile edit handler
 function handleProfileEditSubmit(profileData) {
@@ -208,6 +208,7 @@ function handleAddCardSubmit(inputValues) {
       addCardPopup.renderLoading(false);
     });
 }
+
 // New profile image handler
 function handleProfileImageSubmit(newImageData) {
   profileImagePopup.renderLoading(true);
