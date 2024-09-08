@@ -1,8 +1,8 @@
 import Popup from "./Popup.js";
 
 export default class PopupDeleteCard extends Popup {
-  constructor({ popupSelector, handleDeleteConfirm }) {
-    super({ popupSelector });
+  constructor(popupSelector, handleDeleteConfirm) {
+    super(popupSelector);
     this._handleDeleteConfirm = handleDeleteConfirm;
     this._submitButton = this._popupElement.querySelector(
       ".modal__save-button"
@@ -14,26 +14,28 @@ export default class PopupDeleteCard extends Popup {
     this._handleDeleteConfirm = callback;
   }
 
-  _handleConfirmDelete = () => {
+  _handleConfirmDelete() {
     if (typeof this._handleDeleteConfirm === "function") {
-      this._handleDeleteConfirm();
+      return this._handleDeleteConfirm();
     }
-  };
+    return Promise.resolve();
+  }
 
   setEventListeners() {
     super.setEventListeners();
     this._submitButton.addEventListener("click", (evt) => {
       evt.preventDefault();
-      this._handleConfirmDelete();
-      this.close();
+      this.renderLoading(true);
+      this._handleConfirmDelete()
+        .then(() => this.close())
+        .catch((err) => console.error(`Error during deletion: ${err}`))
+        .finally(() => this.renderLoading(false));
     });
   }
 
   renderLoading(isLoading, loadingText = "Deleting...") {
-    if (isLoading) {
-      this._submitButton.textContent = loadingText;
-    } else {
-      this._submitButton.textContent = this._submitButtonText;
-    }
+    this._submitButton.textContent = isLoading
+      ? loadingText
+      : this._submitButtonText;
   }
 }

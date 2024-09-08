@@ -6,9 +6,10 @@ export default class Card {
     handleDeleteClick,
     handleLikeClick
   ) {
-    this._title = data.title;
-    this._image = data.image;
+    this._title = data.name; // Use 'name' if that's how your data is structured
+    this._image = data.link; // Use 'link' if that's how your data is structured
     this._id = data._id;
+    this._likes = data.likes || []; // Array of like objects
     this._cardSelector = cardSelector;
     this._handleImageClick = handleImageClick;
     this._handleDeleteClick = handleDeleteClick;
@@ -20,8 +21,10 @@ export default class Card {
     this._deleteButton = this._cardElement.querySelector(
       ".cards__delete-button"
     );
+    this._cardImageEl = this._cardElement.querySelector(".cards__image");
 
     this._setEventListeners();
+    this._updateLikeState(); // Set the initial like state based on server data
   }
 
   _setEventListeners() {
@@ -34,7 +37,6 @@ export default class Card {
     });
 
     this._cardImageEl.addEventListener("click", () => {
-      // Ensure this line passes correct arguments
       this._handleImageClick(this._title, this._image);
     });
   }
@@ -66,11 +68,17 @@ export default class Card {
     this._cardElement = null;
   }
 
-  getIsLikedState() {
-    return this._likeButton.classList.contains("cards__like-button_active");
+  _updateLikeState() {
+    // Check if the current card is liked by checking the likes array
+    const isLiked = this._likes.length > 0; // Assuming if there are any likes, the card is liked
+    this.updateLikeState(isLiked);
   }
 
-  flipLikeState() {
-    this._likeButton.classList.toggle("cards__like-button_active");
+  updateLikeState(isLiked) {
+    if (isLiked) {
+      this._likeButton.classList.add("cards__like-button_active");
+    } else {
+      this._likeButton.classList.remove("cards__like-button_active");
+    }
   }
 }

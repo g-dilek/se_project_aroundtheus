@@ -21,8 +21,13 @@ export default class Section {
     });
   }
 
-  // When adding new individual cards
+  // Add new items to the beginning of the container
   addItem(newItem) {
     this._container.prepend(newItem);
+  }
+
+  // Add new items to the end of the container
+  appendItem(newItem) {
+    this._container.append(newItem);
   }
 }

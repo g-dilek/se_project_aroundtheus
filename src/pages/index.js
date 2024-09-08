@@ -1,12 +1,13 @@
 // JS imports
 import { settings } from "../utils/constants.js";
-import Card from "../components/Card.js";
+import { handleSubmit } from "../utils/handleSubmit.js";
+import { renderCard } from "../utils/renderCard.js";
+import { createCard } from "../utils/createCard.js";
 import FormValidator from "../components/FormValidator.js";
 import Section from "../components/Section.js";
 import UserInfo from "../components/UserInfo.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import PopupWithImage from "../components/PopupWithImage.js";
-import Popup from "../components/Popup.js";
 import Api from "../components/Api.js";
 import PopupDeleteCard from "../components/PopupDeleteCard.js";
 
@@ -15,30 +16,23 @@ import "../pages/index.css";
 
 // ! ELEMENTS
 
-// Edit profile
+// Profile edit
 const profileEditButton = document.querySelector("#profile-edit-button");
 const profileTitle = document.querySelector("#profile-title");
 const profileSubtitle = document.querySelector("#profile-subtitle");
 
-// Add new card
-const addCardModal = document.querySelector("#add-card-modal");
+// Card addition
 const addCardButton = document.querySelector("#add-card-button");
-const cardListEl = document.querySelector("#card-list");
-const addCardForm = addCardModal.querySelector(".modal__form");
 
-// New profile Image
+// Profile image
 const profileImageButton = document.querySelector(
   ".profile__avatar-edit-button"
 );
-const profileImage = document.querySelector(".profile__image");
 
-// Confirm card delete
-const deleteIcon = document.querySelectorAll("#card-delete-button");
+// Card deletion
 let cardToDelete = null;
 
-// store form data to allow for saving of data
-// despite opening and closing modal. only cleared
-// when form submitted
+// Form data
 let cardFormData = {
   title: "",
   image: "",
@@ -46,37 +40,27 @@ let cardFormData = {
 
 // ! INSTANTIATE CLASSES
 
-// Confirm card delete form
+// Instantiate popups
 const deleteCardPopup = new PopupDeleteCard({
   popupSelector: "#confirm-delete-modal",
 });
-
 deleteCardPopup.setDeleteConfirmCallback(handleConfirmDelete);
 
-// New profile image form / Avatar
 const profileImagePopup = new PopupWithForm(
   "#profile-image-modal",
   handleProfileImageSubmit
 );
 
-// Edit profile form
 const profileEditPopup = new PopupWithForm(
   "#profile-edit-modal",
   handleProfileEditSubmit
 );
 
-// Add card form
-const addCardPopup = new PopupWithForm(
-  "#add-card-modal",
-  handleAddCardSubmit,
-  // new handler to allow for saving of data on modal close
-  updateCardFormData
-);
+const addCardPopup = new PopupWithForm("#add-card-modal", handleAddCardSubmit);
 
-// Full image popup
 const imagePreviewPopup = new PopupWithImage("#card-image-modal");
 
-// API
+// Instantiate API
 const api = new Api({
   baseUrl: "https://around-api.en.tripleten-services.com/v1",
   headers: {
@@ -85,37 +69,41 @@ const api = new Api({
   },
 });
 
-// User Info
+// Instantiate user info
 const user = new UserInfo({
   title: ".profile__title",
   subtitle: ".profile__subtitle",
   avatar: ".profile__image",
 });
 
-// Creates card section
+// Instantiate card section
 const cardSection = new Section(
   {
     items: [],
     renderer: (item) => {
-      const card = createCard(item);
-      cardSection.addItem(card.getCardElement());
+      const cardElement = createCard(
+        item,
+        handleCardImageClick,
+        handleDeleteCard,
+        handleLikeCard
+      );
+      cardSection.addItem(cardElement);
     },
   },
   "#card-list"
 );
 
-// Fetches initial cards from server
-api
-  .getInitialCards()
-  .then((cards) => {
-    cardSection.setItems(cards);
-  })
-  .catch((err) => console.error("Error fetching initial cards:", err));
+// ! INITIAL DATA FETCHING
 
-// Fetch and render user info
-api
-  .getUserInfo()
-  .then((userInfo) => {
+// Fetch initial cards and user info
+const initialize = async () => {
+  try {
+    const [cards, userInfo] = await Promise.all([
+      api.getInitialCards(),
+      api.getUserInfo(),
+    ]);
+
+    cardSection.setItems(cards);
     user.setUserInfo({
       name: userInfo.name,
       about: userInfo.about,
@@ -123,45 +111,22 @@ api
     user.setUserAvatar({
       avatar: userInfo.avatar,
     });
-  })
-  .catch((err) => console.error("Error fetching user info:", err));
+  } catch (err) {
+    console.error("Initialization error:", err);
+  }
+};
 
-// ! FUNCTIONS
+initialize();
 
-// allows saving of data when add card modal is closed
-// and re-opened, but not submitted
-function updateCardFormData(data) {
-  cardFormData = { ...data };
-}
+// ! FORM VALIDATION
 
-// Function to create a new card element
-function createCard(cardData) {
-  return new Card(
-    {
-      title: cardData.name,
-      image: cardData.link,
-      _id: cardData._id,
-    },
-    "#card-template",
-    handleCardImageClick,
-    handleDeleteCard,
-    handleLikeCard
-  );
-}
-
-// ! FORM VALIDATOR
-
-// define an object for storing validators
 const formValidators = {};
 
 const enableValidation = (settings) => {
-  // make an array of all forms and grab all their elements (see settings)
   const formList = Array.from(document.querySelectorAll(settings.formSelector));
-  // iterate through each element
   formList.forEach((formElement) => {
     const validator = new FormValidator(settings, formElement);
     const formName = formElement.getAttribute("name");
-    // assign validators to the passed-in formName and enable validation
     formValidators[formName] = validator;
     validator.enableValidation();
   });
@@ -169,116 +134,100 @@ const enableValidation = (settings) => {
 
 enableValidation(settings);
 
-formValidators["profile-form"].resetValidation();
-formValidators["card-form"].resetValidation();
-
 // ! EVENT HANDLERS
 
-// Profile edit handler
+// Handle profile edit form submission
 function handleProfileEditSubmit(profileData) {
-  profileEditPopup.renderLoading(true);
-  api
-    .updateProfileInfo({
-      name: profileData.title,
-      description: profileData.subtitle,
-    })
-    .then((updatedData) => {
-      user.setUserInfo(updatedData);
-      profileEditPopup.close();
-    })
-    .catch((err) => console.error(`Failed to update profile: ${err}`))
-    .finally(() => {
-      profileEditPopup.renderLoading(false);
-    });
+  handleSubmit(() => {
+    return api
+      .updateProfileInfo({
+        name: profileData.title,
+        description: profileData.subtitle,
+      })
+      .then((updatedData) => {
+        user.setUserInfo(updatedData);
+      });
+  }, profileEditPopup);
 }
 
 // Add card handler
 function handleAddCardSubmit(inputValues) {
-  addCardPopup.renderLoading(true);
-  api
-    .addCard({ name: inputValues.title, link: inputValues.image })
-    .then((newCardData) => {
-      const newCard = createCard(newCardData);
-      cardSection.addItem(newCard.getCardElement());
-      addCardPopup.close();
-      formValidators["card-form"].resetValidation();
-    })
-    .catch((err) => console.error("Error adding card:", err))
-    .finally(() => {
-      addCardPopup.renderLoading(false);
-    });
+  handleSubmit(() => {
+    return api
+      .addCard({ name: inputValues.title, link: inputValues.image })
+      .then((newCardData) => {
+        renderCard(newCardData, "appendItem");
+      });
+  }, addCardPopup);
 }
 
-// New profile image handler
+// Handle profile image form submission
 function handleProfileImageSubmit(newImageData) {
-  profileImagePopup.renderLoading(true);
-  api
-    .updateProfileAvatar({ avatar: newImageData.image })
-    .then((res) => {
-      user.setUserAvatar({ avatar: res.avatar });
-      profileImagePopup.close();
-    })
-    .catch(console.error)
-    .finally(() => {
-      profileImagePopup.renderLoading(false);
-    });
+  handleSubmit(() => {
+    return api
+      .updateProfileAvatar({ avatar: newImageData.image })
+      .then((res) => {
+        user.setUserAvatar({ avatar: res.avatar });
+      });
+  }, profileImagePopup);
 }
 
-// Confirm card deletion handler
+// Handle card delete confirmation
 function handleDeleteCard(card) {
   cardToDelete = card;
   deleteCardPopup.open();
 }
 
-// Like button handler
+// Handle card like button
 const handleLikeCard = (card) => {
   const cardId = card.getId();
-  api
-    .likeCard(cardId)
+  const isCurrentlyLiked = card
+    .getCardElement()
+    .querySelector(".cards__like-button")
+    .classList.contains("cards__like-button_active");
+
+  (isCurrentlyLiked ? api.unlikeCard(cardId) : api.likeCard(cardId))
     .then(() => {
-      card.flipLikeState();
+      // Update the UI
+      card._updateLikeState();
     })
-    .catch((err) => {
-      console.error(`Error: ${err}`);
-    });
+    .catch((err) => console.error(`Error updating like state: ${err}`));
 };
 
+// Handle card delete confirmation submit
 function handleConfirmDelete() {
-  deleteCardPopup.renderLoading(true);
-  api
-    .deleteCard(cardToDelete.getId())
-    .then(() => {
-      cardToDelete.handleDeleteCard();
-      cardToDelete = null;
-      deleteCardPopup.close();
-    })
-    .catch((err) => {
-      console.error("Error deleting card:", err);
-    })
-    .finally(() => {
-      deleteCardPopup.renderLoading(false);
-    });
+  handleSubmit(
+    () => {
+      return api.deleteCard(cardToDelete.getId()).then(() => {
+        cardToDelete.handleDeleteCard();
+        cardToDelete = null;
+      });
+    },
+    deleteCardPopup,
+    "Yes",
+    "Deleting..."
+  );
 }
 
-// Full card image handler
+// Handle card image click
 function handleCardImageClick(name, link) {
   imagePreviewPopup.open(name, link);
 }
 
-// ! EVENT LISTENERS FOR POPUPS
+// ! EVENT LISTENERS
 
+// Set event listeners for popups
 profileEditPopup.setEventListeners();
 addCardPopup.setEventListeners();
 imagePreviewPopup.setEventListeners();
 profileImagePopup.setEventListeners();
 deleteCardPopup.setEventListeners();
 
-// ! EVENT LISTENERS FOR BUTTONS
-
+// Set event listeners for buttons
 profileEditButton.addEventListener("click", () => {
   const userInput = user.getUserInfo();
   profileTitle.value = userInput.title;
-  profileSubtitle.value = userInput.title;
+  profileSubtitle.value = userInput.subtitle;
   profileEditPopup.open({
     title: userInput.title,
     subtitle: userInput.subtitle,

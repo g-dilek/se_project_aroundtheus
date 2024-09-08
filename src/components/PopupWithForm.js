@@ -60,10 +60,21 @@ export default class PopupWithForm extends Popup {
     super.setEventListeners();
     this._form.addEventListener("submit", (evt) => {
       evt.preventDefault();
-      this._handleFormSubmit(this._getInputValues());
-      this._formData = {};
-      this._form.reset();
-      this.close();
+      this.renderLoading(true); // Start loading state
+      this._handleFormSubmit(this._getInputValues())
+        .then(() => {
+          // Only reset and close the modal on successful form submission
+          this._form.reset();
+          this.close(); // Close modal only if successful
+        })
+        .catch((err) => {
+          console.error(`Error during form submission: ${err}`);
+          // Do not reset the form here to allow the user to retry
+        })
+        .finally(() => {
+          // Reset loading state
+          this.renderLoading(false);
+        });
     });
   }
 
