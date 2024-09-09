@@ -6,10 +6,10 @@ export default class Card {
     handleDeleteClick,
     handleLikeClick
   ) {
-    this._title = data.name; // Use 'name' if that's how your data is structured
-    this._image = data.link; // Use 'link' if that's how your data is structured
+    this._title = data.name;
+    this._image = data.link;
     this._id = data._id;
-    this._likes = data.likes || []; // Array of like objects
+    this._isLiked = data.isLiked || false;
     this._cardSelector = cardSelector;
     this._handleImageClick = handleImageClick;
     this._handleDeleteClick = handleDeleteClick;
@@ -24,7 +24,7 @@ export default class Card {
     this._cardImageEl = this._cardElement.querySelector(".cards__image");
 
     this._setEventListeners();
-    this._updateLikeState(); // Set the initial like state based on server data
+    this._updateLikeState(); // Set initial like state
   }
 
   _setEventListeners() {
@@ -63,15 +63,18 @@ export default class Card {
     return this._id;
   }
 
-  handleDeleteCard() {
+  handleDeleteClick() {
     this._cardElement.remove();
     this._cardElement = null;
   }
 
   _updateLikeState() {
-    // Check if the current card is liked by checking the likes array
-    const isLiked = this._likes.length > 0; // Assuming if there are any likes, the card is liked
-    this.updateLikeState(isLiked);
+    if (this._isLiked) {
+      // Assuming _isLiked is a boolean
+      this._likeButton.classList.add("cards__like-button_active");
+    } else {
+      this._likeButton.classList.remove("cards__like-button_active");
+    }
   }
 
   updateLikeState(isLiked) {

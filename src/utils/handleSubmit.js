@@ -1,37 +1,43 @@
+import Popup from "../components/Popup.js";
+
 export function handleSubmit(
   submitAction,
-  popup,
+  popupInstance, // This should be an instance of Popup or PopupDeleteCard
   submitText = "Save",
-  loadingText = "Saving...",
-  resetForm = true
+  loadingText = "Saving..."
 ) {
-  const submitButton = popup.querySelector(".popup__save-button");
+  // Check if popupInstance is an instance of Popup
+  if (!(popupInstance instanceof Popup)) {
+    console.error("The provided popupInstance is not an instance of Popup.");
+    return Promise.reject("Invalid popup instance");
+  }
 
-  // Start with enabling the button and resetting its text
-  submitButton.disabled = false;
-  submitButton.textContent = submitText;
+  const popup = popupInstance._popupElement;
+  const submitButton = popup.querySelector(".modal__save-button");
 
-  // Disable and update button text
+  if (!submitButton) {
+    console.error("Submit button not found in popup.");
+    return Promise.reject("Submit button not found");
+  }
+
   submitButton.disabled = true;
   submitButton.textContent = loadingText;
 
-  submitAction()
+  // Ensure submitAction returns a promise
+  return Promise.resolve(submitAction())
     .then(() => {
-      // Close popup and reset button only on successful response
-      popup.close();
+      popupInstance.close();
       submitButton.disabled = false;
       submitButton.textContent = submitText;
 
-      // Reset form if applicable and the flag is true
-      if (resetForm) {
-        const form = popup.querySelector("form");
-        if (form) form.reset();
-      }
+      const form = popup.querySelector("form");
+      if (form) form.reset();
     })
     .catch((err) => {
       console.error(`Error: ${err}`);
-      // If there's an error, keep the button enabled so the user can try again
       submitButton.disabled = false;
       submitButton.textContent = submitText;
+      // Ensure errors are propagated
+      throw err;
     });
 }

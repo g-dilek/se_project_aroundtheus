@@ -41,9 +41,11 @@ let cardFormData = {
 // ! INSTANTIATE CLASSES
 
 // Instantiate popups
-const deleteCardPopup = new PopupDeleteCard({
-  popupSelector: "#confirm-delete-modal",
-});
+const deleteCardPopup = new PopupDeleteCard(
+  { popupSelector: "#confirm-delete-modal" },
+  handleConfirmDelete
+);
+
 deleteCardPopup.setDeleteConfirmCallback(handleConfirmDelete);
 
 const profileImagePopup = new PopupWithForm(
@@ -77,15 +79,15 @@ const user = new UserInfo({
 });
 
 // Instantiate card section
-const cardSection = new Section(
+export const cardSection = new Section(
   {
     items: [],
     renderer: (item) => {
       const cardElement = createCard(
         item,
         handleCardImageClick,
-        handleDeleteCard,
-        handleLikeCard
+        handleDeleteClick,
+        handleLikeClick
       );
       cardSection.addItem(cardElement);
     },
@@ -138,7 +140,7 @@ enableValidation(settings);
 
 // Handle profile edit form submission
 function handleProfileEditSubmit(profileData) {
-  handleSubmit(() => {
+  return handleSubmit(() => {
     return api
       .updateProfileInfo({
         name: profileData.title,
@@ -152,7 +154,7 @@ function handleProfileEditSubmit(profileData) {
 
 // Add card handler
 function handleAddCardSubmit(inputValues) {
-  handleSubmit(() => {
+  return handleSubmit(() => {
     return api
       .addCard({ name: inputValues.title, link: inputValues.image })
       .then((newCardData) => {
@@ -163,7 +165,7 @@ function handleAddCardSubmit(inputValues) {
 
 // Handle profile image form submission
 function handleProfileImageSubmit(newImageData) {
-  handleSubmit(() => {
+  return handleSubmit(() => {
     return api
       .updateProfileAvatar({ avatar: newImageData.image })
       .then((res) => {
@@ -173,33 +175,31 @@ function handleProfileImageSubmit(newImageData) {
 }
 
 // Handle card delete confirmation
-function handleDeleteCard(card) {
+function handleDeleteClick(card) {
   cardToDelete = card;
   deleteCardPopup.open();
 }
 
 // Handle card like button
-const handleLikeCard = (card) => {
-  const cardId = card.getId();
-  const isCurrentlyLiked = card
-    .getCardElement()
-    .querySelector(".cards__like-button")
-    .classList.contains("cards__like-button_active");
+function handleLikeClick(card) {
+  const newLikeState = !card._isLiked;
+  card.updateLikeState(newLikeState);
+  card._isLiked = newLikeState;
 
-  (isCurrentlyLiked ? api.unlikeCard(cardId) : api.likeCard(cardId))
-    .then(() => {
-      // Update the UI
-      card._updateLikeState();
-    })
-    .catch((err) => console.error(`Error updating like state: ${err}`));
-};
+  // Update server
+  if (newLikeState) {
+    api.likeCard(card.getId()).catch((err) => console.error(err));
+  } else {
+    api.unlikeCard(card.getId()).catch((err) => console.error(err));
+  }
+}
 
 // Handle card delete confirmation submit
 function handleConfirmDelete() {
-  handleSubmit(
+  return handleSubmit(
     () => {
       return api.deleteCard(cardToDelete.getId()).then(() => {
-        cardToDelete.handleDeleteCard();
+        cardToDelete.handleDeleteClick();
         cardToDelete = null;
       });
     },
@@ -224,10 +224,9 @@ profileImagePopup.setEventListeners();
 deleteCardPopup.setEventListeners();
 
 // Set event listeners for buttons
+// Handle profile edit button click
 profileEditButton.addEventListener("click", () => {
   const userInput = user.getUserInfo();
-  profileTitle.value = userInput.title;
-  profileSubtitle.value = userInput.subtitle;
   profileEditPopup.open({
     title: userInput.title,
     subtitle: userInput.subtitle,

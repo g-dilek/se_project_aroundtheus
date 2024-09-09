@@ -30,6 +30,9 @@ export default class Api {
 
   // Add a new card
   addCard({ name, link }) {
+    if (!name || !link) {
+      return Promise.reject("Missing name or link"); // Add this validation
+    }
     return this._request(`${this._baseUrl}/cards`, {
       method: "POST",
       headers: this._headers,

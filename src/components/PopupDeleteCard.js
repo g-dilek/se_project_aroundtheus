@@ -1,8 +1,8 @@
 import Popup from "./Popup.js";
 
 export default class PopupDeleteCard extends Popup {
-  constructor(popupSelector, handleDeleteConfirm) {
-    super(popupSelector);
+  constructor({ popupSelector }, handleDeleteConfirm) {
+    super({ popupSelector });
     this._handleDeleteConfirm = handleDeleteConfirm;
     this._submitButton = this._popupElement.querySelector(
       ".modal__save-button"
@@ -14,19 +14,33 @@ export default class PopupDeleteCard extends Popup {
     this._handleDeleteConfirm = callback;
   }
 
-  _handleConfirmDelete() {
+  _handleConfirmDelete = () => {
     if (typeof this._handleDeleteConfirm === "function") {
+      // Return the promise from the callback
       return this._handleDeleteConfirm();
     }
+    // Return a resolved promise if no callback is set
     return Promise.resolve();
-  }
+  };
 
   setEventListeners() {
     super.setEventListeners();
     this._submitButton.addEventListener("click", (evt) => {
       evt.preventDefault();
       this.renderLoading(true);
-      this._handleConfirmDelete()
+
+      // Ensure _handleConfirmDelete is defined and returns a promise
+      const confirmDeletePromise = this._handleConfirmDelete();
+
+      if (!(confirmDeletePromise instanceof Promise)) {
+        console.error(
+          "The _handleConfirmDelete method did not return a promise."
+        );
+        this.renderLoading(false);
+        return;
+      }
+
+      confirmDeletePromise
         .then(() => this.close())
         .catch((err) => console.error(`Error during deletion: ${err}`))
         .finally(() => this.renderLoading(false));
@@ -34,8 +48,10 @@ export default class PopupDeleteCard extends Popup {
   }
 
   renderLoading(isLoading, loadingText = "Deleting...") {
-    this._submitButton.textContent = isLoading
-      ? loadingText
-      : this._submitButtonText;
+    if (isLoading) {
+      this._submitButton.textContent = loadingText;
+    } else {
+      this._submitButton.textContent = this._submitButtonText;
+    }
   }
 }
