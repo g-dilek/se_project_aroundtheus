@@ -3,12 +3,13 @@ import { createCard } from "../utils/createCard.js";
 import { handleSubmit } from "../utils/handleSubmit.js";
 
 export default class PopupWithForm extends Popup {
-  constructor(popupSelector, handleSubmit) {
+  constructor(popupSelector, handleSubmit, formValidator) {
     super({ popupSelector });
     this._handleSubmit = handleSubmit;
     this._form = this._popupElement.querySelector("form");
     this._submitButton = this._form.querySelector("button[type='submit']");
     this._submitButtonText = this._submitButton.textContent;
+    this._formValidator = formValidator;
   }
 
   setEventListeners() {
@@ -36,6 +37,7 @@ export default class PopupWithForm extends Popup {
     super.open();
     this._populateForm(formData);
     this._focusFirstInput();
+    this._formValidator.resetValidation();
   }
 
   _focusFirstInput() {

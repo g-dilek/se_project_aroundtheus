@@ -38,6 +38,23 @@ let cardFormData = {
   image: "",
 };
 
+// ! FORM VALIDATION
+
+const formValidators = {};
+
+const enableValidation = (settings) => {
+  const formList = Array.from(document.querySelectorAll(settings.formSelector));
+  formList.forEach((formElement) => {
+    const validator = new FormValidator(settings, formElement);
+    const formName = formElement.getAttribute("name");
+    formValidators[formName] = validator;
+    validator.enableValidation();
+  });
+};
+
+enableValidation(settings);
+console.log(formValidators);
+
 // ! INSTANTIATE CLASSES
 
 // Instantiate popups
@@ -50,15 +67,21 @@ deleteCardPopup.setDeleteConfirmCallback(handleConfirmDelete);
 
 const profileImagePopup = new PopupWithForm(
   "#profile-image-modal",
-  handleProfileImageSubmit
+  handleProfileImageSubmit,
+  formValidators["profile-image-form"]
 );
 
 const profileEditPopup = new PopupWithForm(
   "#profile-edit-modal",
-  handleProfileEditSubmit
+  handleProfileEditSubmit,
+  formValidators["profile-edit-form"]
 );
 
-const addCardPopup = new PopupWithForm("#add-card-modal", handleAddCardSubmit);
+const addCardPopup = new PopupWithForm(
+  "#add-card-modal",
+  handleAddCardSubmit,
+  formValidators["add-card-form"]
+);
 
 const imagePreviewPopup = new PopupWithImage("#card-image-modal");
 
@@ -120,22 +143,6 @@ const initialize = async () => {
 
 initialize();
 
-// ! FORM VALIDATION
-
-const formValidators = {};
-
-const enableValidation = (settings) => {
-  const formList = Array.from(document.querySelectorAll(settings.formSelector));
-  formList.forEach((formElement) => {
-    const validator = new FormValidator(settings, formElement);
-    const formName = formElement.getAttribute("name");
-    formValidators[formName] = validator;
-    validator.enableValidation();
-  });
-};
-
-enableValidation(settings);
-
 // ! EVENT HANDLERS
 
 // Handle profile edit form submission
@@ -158,7 +165,16 @@ function handleAddCardSubmit(inputValues) {
     return api
       .addCard({ name: inputValues.title, link: inputValues.image })
       .then((newCardData) => {
-        renderCard(newCardData, "appendItem");
+        // Use the createCard utility to create a new card
+        const newCardElement = createCard(
+          newCardData,
+          handleCardImageClick,
+          handleDeleteClick,
+          handleLikeClick
+        );
+
+        // Add the new card to the card section
+        cardSection.addItem(newCardElement);
       });
   }, addCardPopup);
 }
@@ -231,7 +247,7 @@ profileEditButton.addEventListener("click", () => {
     title: userInput.title,
     subtitle: userInput.subtitle,
   });
-  formValidators["profile-form"].resetValidation();
+  formValidators["profile-edit-form"].resetValidation();
 });
 
 addCardButton.addEventListener("click", () => {
