@@ -198,9 +198,9 @@ function handleDeleteClick(card) {
 
 // Handle card like button
 function handleLikeClick(card) {
-  const newLikeState = !card._isLiked;
+  const newLikeState = !card.isLiked;
   card.updateLikeState(newLikeState);
-  card._isLiked = newLikeState;
+  card.isLiked = newLikeState;
 
   // Update server
   if (newLikeState) {

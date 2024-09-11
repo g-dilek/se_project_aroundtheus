@@ -6,7 +6,7 @@ export default class PopupWithForm extends Popup {
   constructor(popupSelector, handleSubmit, formValidator) {
     super({ popupSelector });
     this._handleSubmit = handleSubmit;
-    this._form = this._popupElement.querySelector("form");
+    this._form = this.popupElement.querySelector("form");
     this._submitButton = this._form.querySelector("button[type='submit']");
     this._submitButtonText = this._submitButton.textContent;
     this._formValidator = formValidator;
@@ -31,6 +31,11 @@ export default class PopupWithForm extends Popup {
         .catch((err) => console.error(`Error during form submission: ${err}`))
         .finally(() => this.renderLoading(false));
     });
+  }
+
+  resetForm() {
+    const form = this.popupElement.querySelector("form");
+    if (form) form.reset();
   }
 
   open(formData = {}) {

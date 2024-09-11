@@ -2,7 +2,7 @@ import Popup from "../components/Popup.js";
 
 export function handleSubmit(
   submitAction,
-  popupInstance, // This should be an instance of Popup or PopupDeleteCard
+  popupInstance,
   submitText = "Save",
   loadingText = "Saving..."
 ) {
@@ -12,8 +12,8 @@ export function handleSubmit(
     return Promise.reject("Invalid popup instance");
   }
 
-  const popup = popupInstance._popupElement;
-  const submitButton = popup.querySelector(".modal__save-button");
+  const popup = popupInstance.popupElement;
+  const submitButton = popupInstance._submitButton;
 
   if (!submitButton) {
     console.error("Submit button not found in popup.");
@@ -27,17 +27,14 @@ export function handleSubmit(
   return Promise.resolve(submitAction())
     .then(() => {
       popupInstance.close();
-      submitButton.disabled = false;
-      submitButton.textContent = submitText;
-
-      const form = popup.querySelector("form");
-      if (form) form.reset();
+      popupInstance.resetForm(); //
     })
     .catch((err) => {
       console.error(`Error: ${err}`);
-      submitButton.disabled = false;
-      submitButton.textContent = submitText;
       // Ensure errors are propagated
       throw err;
+    })
+    .finally(() => {
+      popupInstance.renderLoading(false, submitText);
     });
 }

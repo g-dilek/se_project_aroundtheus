@@ -9,7 +9,7 @@ export default class Card {
     this._title = data.name;
     this._image = data.link;
     this._id = data._id;
-    this._isLiked = data.isLiked || false;
+    this.isLiked = data.isLiked || false;
     this._cardSelector = cardSelector;
     this._handleImageClick = handleImageClick;
     this._handleDeleteClick = handleDeleteClick;
@@ -69,8 +69,8 @@ export default class Card {
   }
 
   _updateLikeState() {
-    if (this._isLiked) {
-      // Assuming _isLiked is a boolean
+    if (this.isLiked) {
+      // Assuming isLiked is a boolean
       this._likeButton.classList.add("cards__like-button_active");
     } else {
       this._likeButton.classList.remove("cards__like-button_active");
