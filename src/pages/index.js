@@ -63,8 +63,6 @@ const deleteCardPopup = new PopupDeleteCard(
   handleConfirmDelete
 );
 
-deleteCardPopup.setDeleteConfirmCallback(handleConfirmDelete);
-
 const profileImagePopup = new PopupWithForm(
   "#profile-image-modal",
   handleProfileImageSubmit,
@@ -165,15 +163,12 @@ function handleAddCardSubmit(inputValues) {
     return api
       .addCard({ name: inputValues.title, link: inputValues.image })
       .then((newCardData) => {
-        // Use the createCard utility to create a new card
         const newCardElement = createCard(
           newCardData,
           handleCardImageClick,
           handleDeleteClick,
           handleLikeClick
         );
-
-        // Add the new card to the card section
         cardSection.addItem(newCardElement);
       });
   }, addCardPopup);
@@ -192,7 +187,12 @@ function handleProfileImageSubmit(newImageData) {
 
 // Handle card delete confirmation
 function handleDeleteClick(card) {
+  if (!card._cardElement) {
+    console.error("Card element is null for card:", card);
+  }
+
   cardToDelete = card;
+  console.log("Card selected for deletion:", cardToDelete);
   deleteCardPopup.open();
 }
 
@@ -202,7 +202,6 @@ function handleLikeClick(card) {
   card.updateLikeState(newLikeState);
   card.isLiked = newLikeState;
 
-  // Update server
   if (newLikeState) {
     api.likeCard(card.getId()).catch((err) => console.error(err));
   } else {
@@ -212,12 +211,38 @@ function handleLikeClick(card) {
 
 // Handle card delete confirmation submit
 function handleConfirmDelete() {
+  console.log("Confirm delete called");
   return handleSubmit(
     () => {
-      return api.deleteCard(cardToDelete.getId()).then(() => {
-        cardToDelete.handleDeleteClick();
-        cardToDelete = null;
-      });
+      if (!cardToDelete) {
+        console.error("No card to delete.");
+        return Promise.resolve();
+      }
+
+      console.log("Deleting card with id:", cardToDelete.getId());
+
+      return api
+        .deleteCard(cardToDelete.getId())
+        .then(() => {
+          console.log("Card deleted, removing from DOM:", cardToDelete);
+          // Verify if cardToDelete still has a valid element
+          if (cardToDelete._cardElement) {
+            cardToDelete.removeCard();
+            console.log("Card element removed from DOM");
+          } else {
+            console.warn("Card element is already null");
+          }
+          cardToDelete = null;
+          return Promise.resolve();
+        })
+        .catch((error) => {
+          console.error("Error deleting card:", error);
+          return Promise.reject(error);
+        })
+        .finally(() => {
+          deleteCardPopup.close();
+          console.log("Delete popup closed");
+        });
     },
     deleteCardPopup,
     "Yes",
@@ -240,7 +265,6 @@ profileImagePopup.setEventListeners();
 deleteCardPopup.setEventListeners();
 
 // Set event listeners for buttons
-// Handle profile edit button click
 profileEditButton.addEventListener("click", () => {
   const userInput = user.getUserInfo();
   profileEditPopup.open({

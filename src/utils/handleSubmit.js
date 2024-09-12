@@ -13,7 +13,7 @@ export function handleSubmit(
   }
 
   const popup = popupInstance.popupElement;
-  const submitButton = popupInstance._submitButton;
+  const submitButton = popupInstance.submitButton;
 
   if (!submitButton) {
     console.error("Submit button not found in popup.");
@@ -21,7 +21,7 @@ export function handleSubmit(
   }
 
   submitButton.disabled = true;
-  submitButton.textContent = loadingText;
+  popupInstance.renderLoading(true, loadingText);
 
   // Ensure submitAction returns a promise
   return Promise.resolve(submitAction())

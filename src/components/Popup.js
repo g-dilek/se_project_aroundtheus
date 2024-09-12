@@ -1,7 +1,8 @@
 export default class Popup {
   constructor({ popupSelector }) {
     this._popupSelector = popupSelector;
-    this.popupElement = document.querySelector(popupSelector); // Make sure this is a valid DOM element
+    this.popupElement = document.querySelector(popupSelector);
+    this._form = this.popupElement.querySelector("form");
     this._handleEscClose = this._handleEscClose.bind(this);
   }
 
@@ -41,5 +42,9 @@ export default class Popup {
         this.close();
       }
     });
+  }
+
+  resetForm() {
+    this._form.reset();
   }
 }
