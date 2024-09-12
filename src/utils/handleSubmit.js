@@ -20,9 +20,6 @@ export function handleSubmit(
     return Promise.reject("Submit button not found");
   }
 
-  submitButton.disabled = true;
-  popupInstance.renderLoading(true, loadingText);
-
   // Ensure submitAction returns a promise
   return Promise.resolve(submitAction())
     .then(() => {

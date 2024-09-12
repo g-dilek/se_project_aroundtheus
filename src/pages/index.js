@@ -53,7 +53,6 @@ const enableValidation = (settings) => {
 };
 
 enableValidation(settings);
-console.log(formValidators);
 
 // ! INSTANTIATE CLASSES
 
@@ -192,7 +191,6 @@ function handleDeleteClick(card) {
   }
 
   cardToDelete = card;
-  console.log("Card selected for deletion:", cardToDelete);
   deleteCardPopup.open();
 }
 
@@ -211,7 +209,6 @@ function handleLikeClick(card) {
 
 // Handle card delete confirmation submit
 function handleConfirmDelete() {
-  console.log("Confirm delete called");
   return handleSubmit(
     () => {
       if (!cardToDelete) {
@@ -219,18 +216,14 @@ function handleConfirmDelete() {
         return Promise.resolve();
       }
 
-      console.log("Deleting card with id:", cardToDelete.getId());
-
       return api
         .deleteCard(cardToDelete.getId())
         .then(() => {
-          console.log("Card deleted, removing from DOM:", cardToDelete);
           // Verify if cardToDelete still has a valid element
           if (cardToDelete._cardElement) {
             cardToDelete.removeCard();
-            console.log("Card element removed from DOM");
           } else {
-            console.warn("Card element is already null");
+            console.warn("Card element is null");
           }
           cardToDelete = null;
           return Promise.resolve();
@@ -241,7 +234,6 @@ function handleConfirmDelete() {
         })
         .finally(() => {
           deleteCardPopup.close();
-          console.log("Delete popup closed");
         });
     },
     deleteCardPopup,

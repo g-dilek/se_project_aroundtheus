@@ -27,7 +27,6 @@ export default class PopupDeleteCard extends Popup {
       .getElementById("confirm-delete-yes-button")
       .addEventListener("click", (evt) => {
         evt.preventDefault();
-        console.log(12312313);
         this.renderLoading(true);
 
         const confirmDeletePromise = this._confirmDelete();
