@@ -34,6 +34,10 @@ export default class PopupWithForm extends Popup {
     });
   }
 
+  resetForm() {
+    this._form.reset();
+  }
+
   open(formData = {}) {
     super.open();
     this._populateForm(formData);

@@ -38,14 +38,9 @@ export default class PopupDeleteCard extends Popup {
         }
 
         confirmDeletePromise
-          .then(() => {
-            this.close();
-            this.renderLoading(false);
-          })
-          .catch((err) => {
-            console.error(`Error during deletion: ${err}`);
-            this.renderLoading(false);
-          });
+          .then(() => this.close())
+          .catch((err) => console.error(`Error during deletion: ${err}`))
+          .finally(() => this.renderLoading(false));
       });
   }
 

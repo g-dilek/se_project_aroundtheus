@@ -195,16 +195,31 @@ function handleDeleteClick(card) {
 }
 
 // Handle card like button
+// Handle card like button
 function handleLikeClick(card) {
   const newLikeState = !card.isLiked;
+
+  // First update the state of the card (for visual feedback)
   card.updateLikeState(newLikeState);
   card.isLiked = newLikeState;
 
-  if (newLikeState) {
-    api.likeCard(card.getId()).catch((err) => console.error(err));
-  } else {
-    api.unlikeCard(card.getId()).catch((err) => console.error(err));
-  }
+  // Define the API request based on the new state
+  const apiRequest = newLikeState
+    ? api.likeCard(card.getId())
+    : api.unlikeCard(card.getId());
+
+  // Make the API request
+  apiRequest
+    .then(() => {
+      // Success: The state was correctly updated on the server
+      card.updateLikeState(newLikeState);
+    })
+    .catch((err) => {
+      // Failure: Revert the UI state if there was an error
+      console.error("Error toggling like state:", err);
+      card.updateLikeState(!newLikeState); // Revert the visual state
+      card.isLiked = !newLikeState; // Revert the internal state
+    });
 }
 
 // Handle card delete confirmation submit
