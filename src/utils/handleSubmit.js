@@ -24,7 +24,6 @@ export function handleSubmit(
   return Promise.resolve(submitAction())
     .then(() => {
       popupInstance.close();
-      popupInstance.resetForm(); //
     })
     .catch((err) => {
       console.error(`Error: ${err}`);
