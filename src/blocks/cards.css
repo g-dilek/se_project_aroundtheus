@@ -60,7 +60,7 @@
   opacity: 0.5;
 }
 
-.cards__like-button-active {
+.cards__like-button_active {
   background-image: url(../images/Vector_HeartFilled.svg);
 }
 

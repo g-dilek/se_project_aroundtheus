@@ -8,18 +8,40 @@ https://g-dilek.github.io/se_project_aroundtheus/
 
 ## Project Features
 
-- **Responsive design**: Adapts to desktop, tablet, and mobile views
-- **CSS Grid**: Used for layout management
-- **Hover effects**: Includes transitions for interactive elements
-- **Flat BEM file structure**: Organized CSS following the BEM methodology
-- **Modal windows**: For displaying additional content
-- **JavaScript interactivity**:
-  - Adding and removing cards dynamically
-  - Saving form data when forms are closed without submission
-  - ES6 modular class structure for better organization
-- **Webpack**: Used for module bundling and asset management
-  - Hot Module Replacement: See changes in the dev server without page reload
-  - Build Artifacts: After building project in Webpack, production-ready files will be located in the 'dist' directory
+- **HTML**:
+  - **Responsive design**: Adapts to desktop, tablet, and mobile views
+  - **Modal windows**: For displaying additional content, like photo previews and deletion confirmations
+  - **Form validation**: Ensures valid image file types and sizes before upload
+  - **User-friendly UI**: Intuitive controls for liking, deleting, and updating the page’s title and subtitle
+
+- **CSS**:
+  - **CSS Grid**: Used for layout management
+  - **Flexbox**: For flexible and responsive layout arrangements
+  - **Hover effects**: Includes transitions for interactive elements
+  - **Flat BEM file structure**: Organized CSS following the BEM methodology
+
+- **JavaScript**:
+  - **JavaScript interactivity**:
+    - Adding and removing photos dynamically
+    - Liking and deleting photos with real-time updates
+    - Changing the page’s title and subtitle dynamically
+    - Asynchronous API requests: Handles image uploads, likes, and deletions using `fetch`
+    - Event listeners: For handling user interactions like liking, deleting, and editing the title/subtitle
+    - DOM manipulation: Dynamically updates the page without reloading
+    - ES6 modular class structure for better organization
+  - **LocalStorage**: Saves temporary data (like liked photos) to persist across sessions
+
+- **API**:
+  - **API Integration**: Connects to a RESTful API for photo management
+    - Uploading photos: Allows users to add images to the gallery
+    - Liking photos: Users can like individual photos, updating the display dynamically
+    - Deleting photos: Enables removal of images from the gallery
+    - Dynamic title/subtitle editing: Allows users to change the page’s title and subtitle in real time
+
+- **Development Tools**:
+  - **Webpack**: Used for module bundling and asset management
+    - Hot Module Replacement: See changes in the dev server without page reload
+    - Build Artifacts: After building the project in Webpack, production-ready files will be located in the 'dist' directory
 
 ## Getting Started
 
