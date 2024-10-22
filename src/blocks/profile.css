@@ -4,6 +4,7 @@
   margin: 40px 0 0;
   padding: 0;
   align-items: center;
+  position: relative;
 }
 
 .profile__header {
@@ -29,6 +30,32 @@
 .profile__image {
   height: 120px;
   width: 120px;
+  transition: opacity 0.4s;
+}
+
+.profile__image:hover,
+.profile:hover .profile__image {
+  opacity: 0.6;
+}
+
+.profile__avatar-edit-button {
+  background: transparent url(../images/Vector_Pencil.svg);
+  background-position: center;
+  background-repeat: no-repeat;
+  border-style: none;
+  height: 26px;
+  width: 26px;
+  position: absolute;
+  margin-left: 48px;
+  margin-top: 48px;
+  transition: visibility 0s linear 0.5s, opacity 0.2s linear;
+  cursor: pointer;
+  opacity: 0;
+}
+
+.profile:hover .profile__avatar-edit-button,
+.profile__image:hover + .profile__avatar-edit-button {
+  opacity: 1; /* Show button on hover */
 }
 
 .profile__title {
@@ -115,6 +142,11 @@
     margin: 36px 0 0 0;
     width: 282px;
   }
+
+  .profile__avatar-edit-button {
+    margin-bottom: 180px;
+    margin-right: 50px;
+  }
 }
 
 @media screen and (max-width: 580px) {
@@ -141,5 +173,10 @@
     height: 18px;
     width: 18px;
     margin-left: 10px;
+  }
+
+  .profile__avatar-edit-button {
+    margin-bottom: 160px;
+    margin-right: 50px;
   }
 }

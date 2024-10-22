@@ -2,7 +2,7 @@ export default class FormValidator {
   constructor(settings, formEl) {
     this._formSelector = settings.formSelector;
     this._inputSelector = settings.inputSelector;
-    this._submitButtonSelector = settings.submitButtonSelector;
+    this.submitButtonSelector = settings.submitButtonSelector;
     this._inactiveButtonClass = settings.inactiveButtonClass;
     this._inputErrorClass = settings.inputErrorClass;
     this._errorClass = settings.errorClass;
@@ -11,7 +11,7 @@ export default class FormValidator {
     this._inputEls = Array.from(
       this._form.querySelectorAll(this._inputSelector)
     );
-    this._submitButton = this._form.querySelector(this._submitButtonSelector);
+    this.submitButton = this._form.querySelector(this.submitButtonSelector);
 
     this._setEventListeners();
   }
@@ -20,7 +20,6 @@ export default class FormValidator {
   _setEventListeners() {
     this._form.addEventListener("submit", (evt) => {
       evt.preventDefault();
-      this._toggleButtonState();
     });
   }
 
@@ -59,13 +58,13 @@ export default class FormValidator {
   }
 
   disableButton() {
-    this._submitButton.setAttribute("disabled", true);
-    this._submitButton.classList.add(this._inactiveButtonClass);
+    this.submitButton.setAttribute("disabled", true);
+    this.submitButton.classList.add(this._inactiveButtonClass);
   }
 
   enableButton() {
-    this._submitButton.removeAttribute("disabled");
-    this._submitButton.classList.remove(this._inactiveButtonClass);
+    this.submitButton.removeAttribute("disabled");
+    this.submitButton.classList.remove(this._inactiveButtonClass);
   }
 
   // Event listeners are for real-time validation feedback

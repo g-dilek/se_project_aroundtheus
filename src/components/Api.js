@@ -1,54 +1,102 @@
-class Api {
+export default class Api {
   constructor(options) {
-    this._authorization = "590f97d9-e5fa-4775-8c94-b9976acf5893";
+    this._headers = options.headers;
+    this._baseUrl = options.baseUrl;
   }
 
+  // Handle HTTP response
+  _handleResponse(res) {
+    if (res.ok) {
+      return res.json();
+    } else {
+      return Promise.reject(`Error ${res.status}`);
+    }
+  }
+
+  // Make a fetch request
+  _request(url, options) {
+    return fetch(url, options).then(this._handleResponse);
+  }
+
+  // Cards
+
+  // Fetch all cards
   getInitialCards() {
-    return fetch("https://around-api.en.tripleten-services.com/v1", {
-      headers: {
-        authorization: this._authorization,
-      },
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        // if the server returns an error, reject the promise
-        return Promise.reject(`Error: ${res.status}`);
-      })
-      .catch((err) => console.error(err));
+    return this._request(`${this._baseUrl}/cards`, {
+      method: "GET",
+      headers: this._headers,
+    });
   }
 
-  // other methods for working with the API
+  // Add a new card
+  addCard({ name, link }) {
+    if (!name || !link) {
+      return Promise.reject("Missing name or link"); // Add this validation
+    }
+    return this._request(`${this._baseUrl}/cards`, {
+      method: "POST",
+      headers: this._headers,
+      body: JSON.stringify({
+        name,
+        link,
+      }),
+    });
+  }
 
-  // Сreate a function in Api.js and return the Promise.all() method.
-  renderCards() {
-    // Pass the array of function calls for getting user information and
-    // the list of cards to Promise.all() as a parameter.
-    return Promise.all();
+  // Delete a card
+  deleteCard(cardId) {
+    return this._request(`${this._baseUrl}/cards/${cardId}`, {
+      method: "DELETE",
+      headers: this._headers,
+    });
+  }
+
+  // Like a card
+  likeCard(cardId) {
+    return this._request(`${this._baseUrl}/cards/${cardId}/likes`, {
+      method: "PUT",
+      headers: this._headers,
+    });
+  }
+
+  // Unlike a card (dislike)
+  unlikeCard(cardId) {
+    return this._request(`${this._baseUrl}/cards/${cardId}/likes`, {
+      method: "DELETE",
+      headers: this._headers,
+    });
+  }
+
+  // Profile
+
+  // Update profile information
+  updateProfileInfo({ name, description }) {
+    return this._request(`${this._baseUrl}/users/me`, {
+      method: "PATCH",
+      headers: this._headers,
+      body: JSON.stringify({ name, about: description }),
+    });
+  }
+
+  // Update profile avatar
+  updateProfileAvatar({ avatar }) {
+    return this._request(`${this._baseUrl}/users/me/avatar`, {
+      method: "PATCH",
+      headers: this._headers,
+      body: JSON.stringify({ avatar }),
+    });
+  }
+
+  // Fetch user info
+  getUserInfo() {
+    return this._request(`${this._baseUrl}/users/me`, {
+      method: "GET",
+      headers: this._headers,
+    });
+  }
+
+  // Fetch both user info and initial cards
+  getAppData() {
+    return Promise.all([this.getUserInfo(), this.getInitialCards()]);
   }
 }
-
-const api = new Api({
-  baseUrl: "https://around-api.en.tripleten-services.com/v1",
-  headers: {
-    authorization: this._authorization,
-    "Content-Type": "application/json",
-  },
-});
-
-// 123 test
-
-// User routes
-
-//     GET /users/me – Get the current user’s info
-//     PATCH /users/me – Update your profile information
-//     PATCH /users/me/avatar – Update avatar
-
-// Card routes
-
-//     GET /cards – Get all cards
-//     POST /cards – Create a card
-//     DELETE /cards/:cardId – Delete a card
-//     PUT /cards/:cardId/likes – Like a card
-//     DELETE /cards/:cardId/likes – Dislike a card
