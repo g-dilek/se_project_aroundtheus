@@ -1,6 +1,6 @@
 # Project 3: Around The U.S.
 
-This is the third project in the Software Engineering program at TripleTen. It was created using HTML, CSS, and Javascript, based on a given design brief.
+This is the project for sprints 3-9 in the Software Engineering program at TripleTen. It was created using HTML, CSS, and Javascript, based on a given design brief.
 
 ## Project Link
 
