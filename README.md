@@ -2,6 +2,10 @@
 
 This is the third project in the Software Engineering program at TripleTen. It was created using HTML, CSS, and Javascript, based on a given design brief.
 
+## Project Link
+
+[You can view and interact with my project by clicking here!](https://g-dilek.github.io/se_project_aroundtheus/)
+
 ## Project Features
 
 - **HTML**:
